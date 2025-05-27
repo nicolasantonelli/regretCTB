@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% block content %}
+    <style>
+
+</style>
+
+  <h3>CTB Task Payoff</h3>
+  <p>We randomly selected <strong>Decision {{ selected }}</strong> for payment.</p>
+  <p>You will receive:</p>
+  <ul>
+    <li><strong>{{ today_str }}</strong> tokens <em>today</em></li>
+    <li><strong>{{ future_str }}</strong> tokens <em>in three weeks</em></li>
+  </ul>
+ <div class="d-flex justify-content-end">
+  <button
+    type="submit"
+    class="btn btn-primary btn-lg otree-btn-next"
+  >
+    Next
+  </button>
+</div>
+{% endblock %}

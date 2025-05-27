@@ -1,0 +1,194 @@
+{% extends "global/Page.html" %}
+{% block content %}
+  <h3>Privacy Policy & Data Treatment</h3>
+
+  <div class="mb-4">
+
+  <h3><strong>Informed Consent Form</strong></h3>
+
+  <p><strong>Study Title:</strong> Decisions in Intertemporal Scenarios</p>
+  <p><strong>Researchers:</strong> [NAME] </p>
+
+  <p><strong>Purpose:</strong> This study explores how individuals make decisions within an intertemporal context.</p>
+  <hr>
+
+  <h5>What We Collect</h5>
+  <ul>
+    <li><strong>Your ID</strong> (only temporarily, to process payment).</li>
+    <ul>
+      <li>This ID will be stored separately from your response data and deleted once payment is complete.</li>
+    </ul>
+    <li><strong>Your responses</strong> to a series of decision-making questions.</li>
+    <ul>
+      <li>These responses will be fully anonymized immediately after your participation so that they cannot be linked back to you.</li>
+    </ul>
+  </ul>
+
+  <h5>Your Rights</h5>
+  <ul>
+    <li>Participation is voluntary.</li>
+    <li>You may withdraw at any time without penalty by closing the software.</li>
+    <li>Once the study is finished and your data have been anonymized, you will no longer be able to withdraw or request deletion of those data.</li>
+  </ul>
+
+  <h5>Confidentiality & Data Handling</h5>
+  <ul>
+    <li>Anonymized data are securely stored on GDPR-compliant servers at the University of Trento.</li>
+    <li>The ID used for payment will be retained only as long as necessary to complete the transaction and then deleted.</li>
+  </ul>
+
+  <h5>Ethics Approval</h5>
+  <p>The protocol has been approved by the International Review Board of DEM.</p>
+
+  <h5>Participant Requirements</h5>
+  <p>Open to individuals aged 18 and over.</p>
+
+  <h5>Risks</h5>
+  <p>No foreseeable risks beyond those associated with normal online activities.</p>
+
+  <h5>Benefits</h5>
+  <p>No direct personal benefit, but results may advance the scientific understanding of decision-making processes.</p>
+
+  <h5>Compensation</h5>
+  <p>As specified in the experiment’s rules.</p>
+
+  <h3 id="privacy-notice"><strong>Privacy Notice</strong></h3>
+
+  <p><strong>Study Title:</strong> Decisions in Social Scenarios</p>
+
+  <h5>1. Data Controller</h5>
+  <p>The University of Trento (via Calepina 14, 38122 Trento; <a href="mailto:ateneo@unitn.it">ateneo@unitn.it</a>) is the data controller. The principal investigator of this study is [Name].</p>
+
+  <h5>2. Data Protection Officer (DPO)</h5>
+  <p>Contact: <a href="mailto:rpd@unitn.it">rpd@unitn.it</a></p>
+
+  <h5>3. Purpose & Legal Basis</h5>
+  <ul>
+    <li><strong>ID (payment only):</strong>
+      <ul>
+        <li>Legal basis: Art. 6(1)(b) GDPR (necessary for performing the participation/payment contract).</li>
+        <li>Treated separately from study data and deleted immediately after payment processing.</li>
+      </ul>
+    </li>
+    <li><strong>Study data (choices/demographics):</strong>
+      <ul>
+        <li>Purpose: Scientific research.</li>
+        <li>Data will be irreversibly anonymized at the end of your participation and thus will no longer qualify as “personal data” under the GDPR.</li>
+        <li>Legal basis: Art. 6(1)(e) GDPR (task in public interest).</li>
+      </ul>
+    </li>
+  </ul>
+
+  <blockquote>No special categories of data (e.g., health, biometric data) are collected.</blockquote>
+
+  <h5>4. Data Collection & Tools</h5>
+  <ul>
+    <li><strong>Source:</strong> Collected directly from you via:
+      <ul>
+        <li>Your ID (for payment)—deleted immediately after the experiment.</li>
+        <li>oTree platform—responses anonymized (choices/demographics).</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h5>5. Data Security & Anonymization</h5>
+  <ul>
+    <li>ID stored only as long as needed to record payment, then deleted.</li>
+    <li>Remaining data anonymized and stored indefinitely.</li>
+  </ul>
+
+  <h5>6. Data Sharing & Transfer</h5>
+  <ul>
+    <li>No third-party access (except anonymized results in publications).</li>
+    <li>No international transfer of personal data—only after anonymization.</li>
+    <li>CEEL (DEM) acts as data processor for the technical platform.</li>
+  </ul>
+
+  <h5>7. Your Rights</h5>
+  <ul>
+    <li>Once your data is anonymized, it is no longer “personal data” under GDPR.</li>
+    <li>You cannot exercise access, rectification, erasure, or other GDPR rights on anonymized data.</li>
+    <li>You may contact the Italian Data Protection Authority if needed.</li>
+  </ul>
+
+  <h5>8. Publication</h5>
+  <p>Results will be published in anonymous/aggregate form.</p>
+
+  <p><strong>Contact:</strong> For questions, email the principal investigator at [email address]</p>
+
+</div>
+
+
+   <p><strong>By proceeding, you confirm (check all to continue):</strong></p>
+
+<div class="form-check mb-2">
+  <input
+    class="form-check-input confirm-checkbox"
+    type="checkbox"
+    id="id_confirm_age"
+    name="confirm_age"
+    required
+  >
+  <label class="form-check-label" for="id_confirm_age">
+    I am at least 18 years old and consent to participate
+  </label>
+</div>
+<div class="form-check mb-2">
+  <input
+    class="form-check-input confirm-checkbox"
+    type="checkbox"
+    id="id_confirm_withdraw"
+    name="confirm_withdraw"
+    required
+  >
+  <label class="form-check-label" for="id_confirm_withdraw">
+    I understand I can withdraw without penalty (by closing the software)
+  </label>
+</div>
+<div class="form-check mb-4">
+  <input
+    class="form-check-input confirm-checkbox"
+    type="checkbox"
+    id="id_confirm_privacy"
+    name="confirm_privacy"
+    required
+  >
+  <label class="form-check-label" for="id_confirm_privacy">
+    I have read the Privacy Notice
+  </label>
+</div>
+
+<!-- Next button pinned bottom-right, disabled until JS enables it -->
+<div class="next-button-container">
+  <button
+    type="submit"
+    id="nextBtn"
+    class="btn btn-primary btn-lg otree-btn-next"
+    disabled
+  >
+    Next
+  </button>
+</div>
+
+{% block scripts %}
+<script>
+  // When any checkbox changes, enable Next only if all are checked
+  const checkboxes = document.querySelectorAll('.confirm-checkbox');
+  const nextBtn    = document.getElementById('nextBtn');
+
+  function updateNext() {
+    // Array.every returns true only if all checkboxes are checked
+    const allChecked = Array.from(checkboxes).every(ch => ch.checked);
+    nextBtn.disabled = !allChecked;
+  }
+
+  // Attach listener to each checkbox
+  checkboxes.forEach(ch => ch.addEventListener('change', updateNext));
+
+  // Initialize on page load (in case browser autochecks something)
+  updateNext();
+</script>
+{% endblock %}
+
+
+{% endblock %}

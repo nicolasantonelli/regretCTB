@@ -1,0 +1,68 @@
+{% extends "global/Page.html" %}
+{% block content %}
+  <h3>Convex Time Budget Task</h3>
+  <p>You have {{ budget }} tokens. Allocate between today and 3 weeks from now.</p>
+
+  {% for rate, fmt in rate_pairs %}
+    <hr>
+    <p>
+      <strong>Decision {{ forloop.counter }}</strong>
+      (Rate: {{ fmt }}×)
+    </p>
+
+    <label for="alloc_early{{ forloop.counter }}">Today:</label>
+    <input
+      id="alloc_early{{ forloop.counter }}"
+      type="number"
+      name="alloc_early{{ forloop.counter }}"
+      step="0.01"
+      required
+    >
+
+    <label for="alloc_late{{ forloop.counter }}">3 Weeks:</label>
+    <input
+      id="alloc_late{{ forloop.counter }}"
+      type="number"
+      name="alloc_late{{ forloop.counter }}"
+      step="0.01"
+      required
+    >
+  {% endfor %}
+
+  <div class="d-flex justify-content-end">
+  <button
+    type="submit"
+    class="btn btn-primary btn-lg otree-btn-next"
+  >
+    Next
+  </button>
+</div>
+
+  <!-- Autofill script -->
+  <script>
+      const budget = 100;
+
+      function setupAutoFill(pairIndex) {
+          const earlyInput = document.querySelector(`input[name="alloc_early${pairIndex}"]`);
+          const lateInput = document.querySelector(`input[name="alloc_late${pairIndex}"]`);
+
+          if (earlyInput && lateInput) {
+              earlyInput.addEventListener('input', () => {
+                  const value = parseFloat(earlyInput.value) || 0;
+                  lateInput.value = Math.max(0, budget - value).toFixed(2);
+              });
+
+              lateInput.addEventListener('input', () => {
+                  const value = parseFloat(lateInput.value) || 0;
+                  earlyInput.value = Math.max(0, budget - value).toFixed(2);
+              });
+          }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+          for (let i = 1; i <= 5; i++) {
+              setupAutoFill(i);
+          }
+      });
+  </script>
+{% endblock %}

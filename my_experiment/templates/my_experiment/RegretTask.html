@@ -1,0 +1,93 @@
+{% extends "global/Page.html" %}
+{% load static %}
+
+{% block content %}
+  <h3>Regret Elicitation Task</h3>
+
+  <div class="row">
+    <!-- Lottery A -->
+    <div class="col text-center">
+      <h4>Lottery A</h4>
+
+      <!-- static wheel A -->
+      <canvas id="wheelA" width="200" height="200" class="mb-3"></canvas>
+
+      <p>50% chance to win 100 tokens</p>
+      <p>50% chance to lose 50 tokens</p>
+
+      <button
+        type="submit"
+        name="chosen_lottery"
+        value="A"
+        class="btn btn-primary btn-lg"
+      >
+        Choose A
+      </button>
+    </div>
+
+    <!-- Lottery B -->
+    <div class="col text-center">
+      <h4>Lottery B</h4>
+
+      <!-- static wheel B -->
+      <canvas id="wheelB" width="200" height="200" class="mb-3"></canvas>
+
+      <p>30% chance to win 200 tokens</p>
+      <p>70% chance to lose 100 tokens</p>
+
+      <button
+        type="submit"
+        name="chosen_lottery"
+        value="B"
+        class="btn btn-primary btn-lg"
+      >
+        Choose B
+      </button>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  // grab canvas contexts
+  const ctxA = document.getElementById('wheelA').getContext('2d'),
+        ctxB = document.getElementById('wheelB').getContext('2d');
+
+  // probabilities from vars_for_template
+  const probsA = {{ prob_a|safe }},
+        probsB = {{ prob_b|safe }};
+
+  // shared drawing parameters
+  const center = { x: 100, y: 100 },
+        radius = 80,
+        colors = ['#2bc31f','#d70000'];
+
+  /**
+   * Draws a static wheel on `ctx`, starting at `startAngle`.
+   * @param  {CanvasRenderingContext2D} ctx
+   * @param  {number[]} probs      fraction of circle [0–1]
+   * @param  {number} startAngle  in radians
+   */
+  function drawStaticWheel(ctx, probs, startAngle) {
+    let start = startAngle;
+    probs.forEach((p, i) => {
+      const slice = p * 2 * Math.PI;
+      ctx.beginPath();
+      ctx.moveTo(center.x, center.y);
+      ctx.arc(center.x, center.y, radius, start, start + slice);
+      ctx.closePath();
+      ctx.fillStyle = colors[i];
+      ctx.fill();
+      start += slice;
+    });
+  }
+
+  // Wheel A: start at +90° (π/2)
+  drawStaticWheel(ctxA, probsA, Math.PI/2);
+
+  // Wheel B: start at –90° (–π/2)
+  drawStaticWheel(ctxB, probsB, -Math.PI/2);
+})();
+</script>
+{% endblock %}

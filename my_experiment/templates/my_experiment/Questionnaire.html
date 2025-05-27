@@ -1,0 +1,94 @@
+{% extends "global/Page.html" %}
+{% block content %}
+  <h3>Please answer the following questions by selecting how much the statements below represent your own behavior.</h3>
+
+  <table class="table table-bordered text-center">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Strongly disagree</th>
+        <th>Disagree</th>
+        <th>Neither agree nor disagree</th>
+        <th>Agree</th>
+        <th>Strongly agree</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>Whenever I make a choice, I’m curious what would have happened if I’d chosen differently.</em></td>
+        {% for val in [1,2,3,4,5] %}
+          <td><input type="radio" name="q_regret_curiosity" value="{{ val }}" required></td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td><em>If I make a choice and it turns out well, I still feel like something of a failure if I find out that another choice would have turned out better.</em></td>
+        {% for val in [1,2,3,4,5] %}
+          <td><input type="radio" name="q_regret_failure" value="{{ val }}" required></td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td><em>When I think about how I’m doing in life, I often assess opportunities I have passed up.</em></td>
+        {% for val in [1,2,3,4,5] %}
+          <td><input type="radio" name="q_assess_opportunities" value="{{ val }}" required></td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td><em>No matter what I do, I have the highest standards for myself.</em></td>
+        {% for val in [1,2,3,4,5] %}
+          <td><input type="radio" name="q_high_standards" value="{{ val }}" required></td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td><em>Choosing what movie/tv show to watch is really difficult. I’m always struggling to pick the best option.</em></td>
+        {% for val in [1,2,3,4,5] %}
+          <td><input type="radio" name="q_choice_difficulty" value="{{ val }}" required></td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td><em>When shopping, I have a hard time finding clothing that I really love.</em></td>
+        {% for val in [1,2,3,4,5] %}
+          <td><input type="radio" name="q_shopping_difficulty" value="{{ val }}" required></td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td><em>I consider how things might be in the future and try to influence those things with my day-to-day behavior.</em></td>
+        {% for val in [1,2,3,4,5] %}
+          <td><input type="radio" name="q_future_thinking" value="{{ val }}" required></td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td><em>I am willing to sacrifice my immediate happiness or well-being in order to achieve future outcomes.</em></td>
+        {% for val in [1,2,3,4,5] %}
+          <td><input type="radio" name="q_sacrifice" value="{{ val }}" required></td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td><em>I only act to satisfy immediate concerns, figuring the future will take care of itself.</em></td>
+        {% for val in [1,2,3,4,5] %}
+          <td><input type="radio" name="q_immediate_concerns" value="{{ val }}" required></td>
+        {% endfor %}
+      </tr>
+     <tr>
+        <td><em>“Had I made a different choice, things would have turned out better for me.”</em></td>
+        {% for val in [1,2,3,4,5] %}
+          <td><input
+                 type="radio"
+                 name="q_regret_counterfactual"
+                 value="{{ val }}"
+                 required>
+          </td>
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-end">
+  <button
+    type="submit"
+    class="btn btn-primary btn-lg otree-btn-next"
+  >
+    Next
+  </button>
+</div>
+
+{% endblock %}

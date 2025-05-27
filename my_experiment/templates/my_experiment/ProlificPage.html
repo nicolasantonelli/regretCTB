@@ -1,0 +1,25 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+  <h3>Prolific ID</h3>
+  <p>Please enter your Prolific ID below. This is required for us to verify your completion.</p>
+
+  <!-- oTree will wrap this form automatically -->
+  <div class="mb-3">
+    <label for="id_prolific_id" class="form-label">
+      {{ form.prolific_id.label }}
+    </label>
+    <input
+      type="text"
+      id="id_prolific_id"
+      name="prolific_id"
+      class="form-control"
+      required
+    >
+  </div>
+
+  <div class="d-flex justify-content-end">
+    {{ next_button }}
+  </div>
+{% endblock %}

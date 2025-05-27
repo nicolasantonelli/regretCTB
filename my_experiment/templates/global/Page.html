@@ -1,0 +1,26 @@
+{% load otree static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Experiment{% endblock %}</title>
+
+    {% block styles %}
+      <!-- Your custom CSS -->
+        {{ block.super }}
+
+    {% endblock %}
+
+    {% block global_styles %}{% endblock %}
+  </head>
+
+  <body>
+    {% block content %}{% endblock %}
+
+    {% block scripts %}
+      {{ block.super }}
+    {% endblock %}
+
+    {% block global_scripts %}{% endblock %}
+  </body>
+</html>

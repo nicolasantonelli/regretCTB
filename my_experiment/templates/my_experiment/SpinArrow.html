@@ -1,0 +1,160 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+  <h3>Spin the Arrow</h3>
+  <p>You’ll spin the arrow on your chosen lottery, and the unchosen lottery will spin in parallel (its arrow hidden until you stop).</p>
+
+  <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start; margin-bottom: 20px;">
+    <!-- Chosen always shows -->
+    <div style="text-align: center;">
+      <div><strong>Chosen Lottery</strong></div>
+      <canvas id="chosenWheel" width="300" height="300"></canvas>
+    </div>
+
+    <!-- Only render this block for the treatment group -->
+    {% if treatment == 'treatment' %}
+      <div style="text-align: center;">
+        <div><strong>Unchosen Lottery</strong></div>
+        <canvas id="unchosenWheel" width="300" height="300"></canvas>
+      </div>
+    {% endif %}
+  </div>
+
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button type="button" id="startBtn" class="btn btn-success btn-lg">Start Spin</button>
+    <button type="button" id="stopBtn" class="btn btn-danger btn-lg" disabled>Stop Spin</button>
+  </div>
+
+  <input type="hidden" name="stopped_angle" id="stopped_angle">
+
+  <div class="next-button-container justify-content-end" id="nextContainer" style="display:none;">
+    <button type="submit" class="btn btn-primary btn-lg otree-btn-next">
+      Next
+    </button>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  // Template vars
+  const chosenProbs    = {{ chosen_probs|safe }};
+  const unchosenProbs  = {{ unchosen_probs|safe }};
+  const initialAngle   = {{ initial_angle }};
+  const initialSpeed   = {{ initial_speed }};
+  const isTreatment    = "{{ treatment }}" === "treatment";
+
+  // Canvas helpers (unchanged) …
+  const radius = 140, center = { x:150, y:150 };
+  function drawWheel(ctx, probs) {
+    let start = Math.PI/2, colors = ['#2bc31f','#d70000'];
+    probs.forEach((p,i) => {
+      const slice = p * 2 * Math.PI;
+      ctx.beginPath();
+      ctx.moveTo(center.x, center.y);
+      ctx.arc(center.x, center.y, radius, start, start+slice);
+      ctx.fillStyle = colors[i];
+      ctx.fill();
+      start += slice;
+    });
+  }
+  function drawArrow(ctx, angle, visible) {
+    /* your existing arrow code */
+    const overallArrowLength = radius * 1.5;
+    const headLengthParam    = 15;
+    const halfLen            = overallArrowLength / 2;
+    const tailX              = -halfLen;
+    const tipX               =  halfLen;
+    const baseX              = tipX - headLengthParam;
+    ctx.save();
+    ctx.translate(center.x, center.y);
+    ctx.rotate(angle);
+    ctx.globalAlpha = visible ? 1 : 0;
+    // shaft
+    ctx.beginPath();
+    ctx.moveTo(tailX, 0);
+    ctx.lineTo(baseX, 0);
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth   = 4;
+    ctx.lineCap     = 'round';
+    ctx.stroke();
+    // head
+    ctx.beginPath();
+    ctx.moveTo(tipX, 0);
+    ctx.lineTo(baseX, headLengthParam);
+    ctx.lineTo(baseX, -headLengthParam);
+    ctx.closePath();
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // Grab contexts
+  const ctxChosen   = document.getElementById('chosenWheel').getContext('2d');
+  const ctxUnchosen = isTreatment
+    ? document.getElementById('unchosenWheel').getContext('2d')
+    : null;
+
+  // Arrow state
+  let angle   = initialAngle * Math.PI/180,
+      speed   = initialSpeed * Math.PI/180,
+      spinning=false,
+      slowing =false,
+      showUn  =false;
+
+  // Initial draw
+  drawWheel(ctxChosen, chosenProbs);
+  drawArrow(ctxChosen, angle, true);
+  if (ctxUnchosen) {
+    drawWheel(ctxUnchosen, unchosenProbs);
+    drawArrow(ctxUnchosen, angle, false);
+  }
+
+  function frame() {
+    if (!spinning) return;
+    angle += speed;
+    if (slowing) speed *= 0.97;
+
+    // redraw chosen
+    ctxChosen.clearRect(0,0,300,300);
+    drawWheel(ctxChosen, chosenProbs);
+    drawArrow(ctxChosen, angle, true);
+
+    // redraw unchosen only for treatment
+    if (ctxUnchosen) {
+      ctxUnchosen.clearRect(0,0,300,300);
+      drawWheel(ctxUnchosen, unchosenProbs);
+      drawArrow(ctxUnchosen, angle, showUn);
+    }
+
+    if (slowing && speed < 0.001) {
+      spinning = false;
+      // record angle
+      document.getElementById('stopped_angle').value = (angle * 180/Math.PI) % 360;
+      // reveal unchosen arrow if treatment
+      showUn = true;
+      // reveal Next button
+      document.getElementById('nextContainer').style.display = 'block';
+      return;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // Start spin
+  document.getElementById('startBtn').onclick = () => {
+    spinning = true; slowing = false; showUn = false;
+    speed    = initialSpeed * Math.PI/180;
+    document.getElementById('startBtn').disabled = true;
+    document.getElementById('stopBtn').disabled  = false;
+    frame();
+  };
+
+  // Stop spin
+  document.getElementById('stopBtn').onclick = () => {
+    slowing = true;
+    if (isTreatment) showUn = true;  // unchosen arrow appears immediately
+  };
+})();
+</script>
+{% endblock %}

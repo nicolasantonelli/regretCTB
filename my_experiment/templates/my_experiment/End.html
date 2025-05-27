@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %}
+
+{% block content %}
+  <h3>CTB Task Payoff</h3>
+  <p>The choice that was randomly selected for payment is <strong> Decision {{ selected }} </strong>.</p>
+  <p>You will receive:</p>
+  <ul>
+    <li><strong>{{ today_str }}</strong> tokens <em>today</em></li>
+    <li><strong>{{ future_str }}</strong> tokens <em>in three weeks</em></li>
+  </ul>
+   <p>Please, click on the button at the bottom right of the screen to end the experiment.</p>
+
+<div class="d-flex justify-content-end">
+  <button
+    type="submit"
+    class="btn btn-primary btn-lg otree-btn-next"
+  >
+    End Experiment
+  </button>
+</div>
+{% endblock %}
+
+

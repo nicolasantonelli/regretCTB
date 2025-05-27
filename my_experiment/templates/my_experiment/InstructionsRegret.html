@@ -1,0 +1,65 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+  <h3>Task 1: Regret Elicitation</h3>
+
+  <p>
+    In the first task, you will be asked to choose between two lotteries.
+    Each lottery is represented by a circle divided into two colored
+    sections, each showing a possible outcome. Below is a visual representation:
+  <!-- Insert your visual example here -->
+  <div class="text-center my-4">
+    <img
+      src="{% static 'my_experiment/lotteryexample.png' %}"
+      alt="Illustration of lottery wheel"
+      style="max-width:100%; height:auto;"
+    >
+  </div>
+  </p>
+
+  <!-- TODO: Replace the src below with your own example image
+  <figure class="text-center my-4">
+    <img
+      src=""
+      alt="Example of lottery circle"
+      class="img-fluid"
+      style="max-width:300px;"
+    >
+    <figcaption class="small text-muted">
+      Example of a lottery (not drawn to scale).
+    </figcaption>
+  </figure>
+-->
+  <p>
+    You will receive an endowment of <strong>50 tokens</strong>.
+  </p>
+
+  <p><strong>You will have to:</strong></p>
+  <ul>
+    <li>Select the lottery you prefer;</li>
+    <li>Click on the <strong>START</strong> button to spin the arrow;</li>
+    <li>Click on the <strong>STOP</strong> button to slow down and stop the arrow.</li>
+  </ul>
+
+  <p>
+    The outcome of the lottery will be determined by the section in
+    which the arrow stops.
+  </p>
+
+
+  <div class="alert alert-secondary">
+    <p><strong>Worked example:</strong> If the arrow stops in the dark grey segment (50% chance),
+    you lose 5 tokens. If it stops in the light grey segment (50% chance), you win 5 tokens.
+        The outcome of the lottery will then be added to or subtracted from your initial endowment. </p>
+  </div>
+
+  <div class="d-flex justify-content-end">
+  <button
+    type="submit"
+    class="btn btn-primary btn-lg otree-btn-next"
+  >
+    Next
+  </button>
+</div>
+{% endblock %}

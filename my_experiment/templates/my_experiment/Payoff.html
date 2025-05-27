@@ -1,0 +1,19 @@
+{% extends "global/Page.html" %}
+
+{% block content %}
+<h3>Your Payoffs</h3>
+<p>Initial endowment: {{ endowment }} tokens</p>
+<p>Regret Task outcome: {{ participant.endowment }} tokens</p>
+<p>CTB Payoff now: {{ payoff_now }} tokens</p>
+<p>CTB Payoff later: {{ payoff_later }} tokens</p>
+
+<div class="d-flex justify-content-end">
+  <button
+    type="submit"
+    class="btn btn-primary btn-lg otree-btn-next"
+  >
+    Next
+  </button>
+</div>
+
+{% endblock %}
