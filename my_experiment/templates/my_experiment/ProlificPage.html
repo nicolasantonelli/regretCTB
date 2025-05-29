@@ -1,25 +1,104 @@
 {% extends "global/Page.html" %}
 {% load otree static %}
 
+{% block title %}
+    Prolific ID Entry
+{% endblock %}
+
 {% block content %}
   <h3>Prolific ID</h3>
-  <p>Please enter your Prolific ID below. This is required for us to verify your completion.</p>
+  <hr>
+  <p class="fs-5">Please enter your Prolific ID below. This is required for us to verify your completion.</p>
+  <p class="fs-6 text-muted">Your Prolific ID is 24 characters long and contains only letters and numbers.</p>
 
-  <!-- oTree will wrap this form automatically -->
-  <div class="mb-3">
-    <label for="id_prolific_id" class="form-label">
-      {{ form.prolific_id.label }}
-    </label>
-    <input
-      type="text"
-      id="id_prolific_id"
-      name="prolific_id"
-      class="form-control"
-      required
-    >
-  </div>
+  <form id="prolific-form">
+    <div class="mb-3">
+      <label for="id_prolific_id" class="fs-5 form-label">
+        {{ form.prolific_id.label }}
+      </label>
+      <input
+        type="text"
+        id="id_prolific_id"
+        name="prolific_id"
+        class="form-control"
+        required
+        maxlength="24"
+        minlength="24"
+        pattern="[a-zA-Z0-9]{24}"
+        aria-describedby="prolific_id_help"
+      >
+      <div id="prolific_id_error" class="text-danger mt-1" style="display: none;"></div>
+      <small id="prolific_id_help" class="form-text text-muted">
+        Must be exactly 24 alphanumeric characters.
+      </small>
+    </div>
 
-  <div class="d-flex justify-content-end">
-    {{ next_button }}
-  </div>
+    <div class="d-flex justify-content-end">
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg otree-btn-next"
+        id="next-button"
+      >
+        Next
+      </button>
+    </div>
+  </form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('prolific-form');
+    const prolificIdInput = document.getElementById('id_prolific_id');
+    const errorDisplay = document.getElementById('prolific_id_error');
+    const nextButton = document.getElementById('next-button'); // Get the oTree next button if it's separate
+
+    function validateProlificId() {
+      const value = prolificIdInput.value;
+      let isValid = true;
+      let errorMessage = '';
+
+      if (value.length !== 24) {
+        errorMessage = 'Prolific ID must be exactly 24 characters long.';
+        isValid = false;
+      } else if (!/^[a-zA-Z0-9]+$/.test(value)) { // Check if alphanumeric
+        errorMessage = 'Prolific ID must contain only letters and numbers.';
+        isValid = false;
+      }
+
+      if (!isValid) {
+        errorDisplay.textContent = errorMessage;
+        errorDisplay.style.display = 'block';
+        prolificIdInput.classList.add('is-invalid');
+      } else {
+        errorDisplay.style.display = 'none';
+        prolificIdInput.classList.remove('is-invalid');
+        prolificIdInput.classList.add('is-valid'); // Optional: for positive feedback
+      }
+      return isValid;
+    }
+
+    // Validate on input
+    prolificIdInput.addEventListener('input', validateProlificId);
+
+    // Validate on form submission (oTree handles the actual submission,
+    // but we can prevent its default if our JS validation fails)
+    // However, oTree's form submission is a bit special.
+    // The button with class 'otree-btn-next' triggers oTree's internal submission.
+    // We will rely more on oTree's server-side validation for the final check.
+    // This client-side check is mainly for user experience.
+
+    // If you are NOT using oTree's automatic form wrapping and handling the form submission yourself,
+    // you would do something like this:
+    /*
+    form.addEventListener('submit', function (event) {
+      if (!validateProlificId()) {
+        event.preventDefault(); // Stop submission if invalid
+      }
+    });
+    */
+
+    // For oTree, the server-side validation is crucial.
+    // This client-side script primarily guides the user.
+  });
+</script>
+
 {% endblock %}

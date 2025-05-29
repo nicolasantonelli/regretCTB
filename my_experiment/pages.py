@@ -56,35 +56,45 @@ class SpinArrow(Page):
         return {
             'initial_angle': self.player.arrow_angle,
             'initial_speed': self.player.arrow_speed,
-            'lottery': C.LOTTERY_A if self.player.chosen_lottery == 'A'
-            else C.LOTTERY_B,
+            'lottery': chosen,
             'treatment': self.player.treatment_group,
             'chosen_probs': chosen['probabilities'],
             'unchosen_probs': unchosen['probabilities'],
         }
 
     def before_next_page(self, timeout_happened=False):
-        # Calculate outcome
         p = self.player
-        stopped_angle = p.stopped_angle % 360
+        spin_angle = p.stopped_angle % 360  # Renamed from 'angle' to 'spin_angle'
+
+        def get_outcome(test_angle, probs, outcomes):
+            """
+            Given a clockwise angle (0-360), probabilities (summing to 1), and outcomes [win, loss],
+            return the correct outcome.
+            The first outcome corresponds to the first slice drawn starting at 90° (Math.PI/2).
+            """
+            start_angle = 90  # Drawing starts at 90°
+            for prob, outcome in zip(probs, outcomes):
+                slice_size = prob * 360
+                end_angle = (start_angle + slice_size) % 360
+                # handle wrapping across 360
+                if start_angle < end_angle:
+                    if start_angle <= test_angle < end_angle:
+                        return outcome
+                else:
+                    if test_angle >= start_angle or test_angle < end_angle:
+                        return outcome
+                start_angle = end_angle
+            return outcomes[-1]  # fallback
+
         if p.chosen_lottery == 'A':
-            angle_cutoff = 180
-            lottery_chosen = C.LOTTERY_A
-            lottery_unchosen = C.LOTTERY_B
+            chosen = C.LOTTERY_A
+            unchosen = C.LOTTERY_B
         else:
-            angle_cutoff = 108
-            lottery_chosen = C.LOTTERY_B
-            lottery_unchosen = C.LOTTERY_A
+            chosen = C.LOTTERY_B
+            unchosen = C.LOTTERY_A
 
-        if stopped_angle <= angle_cutoff:
-            p.outcome = lottery_chosen["outcomes"][0]
-        else:
-            p.outcome = lottery_chosen["outcomes"][1]
-        if stopped_angle <= angle_cutoff:
-            p.unchosen_outcome = lottery_unchosen["outcomes"][0]
-        else:
-            p.unchosen_outcome = lottery_unchosen["outcomes"][1]
-
+        p.outcome = get_outcome(spin_angle, chosen['probabilities'], chosen['outcomes'])
+        p.unchosen_outcome = get_outcome(spin_angle, unchosen['probabilities'], unchosen['outcomes'])
         p.participant.endowment = C.INITIAL_ENDOWMENT + p.outcome
 
 
@@ -99,6 +109,8 @@ class RegretPayoff(Page):
         gained_str = f"{gained:.0f}"
         final_str = f"{final:.0f}"
         unchosen_str = f"{p.unchosen_outcome:.0f}"
+        unchosen_gain = p.unchosen_outcome
+        unchosen_total = initial + unchosen_gain
 
         return {
             'initial': initial,
@@ -106,6 +118,7 @@ class RegretPayoff(Page):
             'unchosen_str': unchosen_str,
             'final_str': final_str,
             'is_treatment': p.treatment_group == 'treatment',
+            'unchosen_total_str': f"{unchosen_total:.0f}",
         }
 # ==============================================================================
 # Convex Time Budget Task
@@ -166,6 +179,7 @@ class Payoff(Page):
             'payoff_now': p.payoff_now,
             'payoff_later': p.payoff_later,
         }
+
 
 class AfterCTB(Page):
     pass

@@ -3,7 +3,8 @@
 
 {% block content %}
   <h3>Spin the Arrow</h3>
-  <p>You’ll spin the arrow on your chosen lottery, and the unchosen lottery will spin in parallel (its arrow hidden until you stop).</p>
+    <hr>
+  <p class="fs-5">You’ll spin the arrow on your chosen lottery, and the unchosen lottery will spin in parallel (its arrow hidden until you stop).</p>
 
   <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start; margin-bottom: 20px;">
     <!-- Chosen always shows -->
@@ -39,11 +40,11 @@
 <script>
 (function() {
   // Template vars
-  const chosenProbs    = {{ chosen_probs|safe }};
-  const unchosenProbs  = {{ unchosen_probs|safe }};
-  const initialAngle   = {{ initial_angle }};
-  const initialSpeed   = {{ initial_speed }};
-  const isTreatment    = "{{ treatment }}" === "treatment";
+  const chosenProbs = {{ chosen_probs|safe }};
+  const unchosenProbs = {{ unchosen_probs|safe }};
+  const initialAngle = {{ initial_angle }};
+  const initialSpeed = {{ initial_speed }};
+  const isTreatment = "{{ treatment }}" === "treatment";
 
   // Canvas helpers (unchanged) …
   const radius = 140, center = { x:150, y:150 };
@@ -62,11 +63,11 @@
   function drawArrow(ctx, angle, visible) {
     /* your existing arrow code */
     const overallArrowLength = radius * 1.5;
-    const headLengthParam    = 15;
-    const halfLen            = overallArrowLength / 2;
-    const tailX              = -halfLen;
-    const tipX               =  halfLen;
-    const baseX              = tipX - headLengthParam;
+    const headLengthParam = 15;
+    const halfLen = overallArrowLength / 2;
+    const tailX = -halfLen;
+    const tipX =  halfLen;
+    const baseX = tipX - headLengthParam;
     ctx.save();
     ctx.translate(center.x, center.y);
     ctx.rotate(angle);
@@ -76,8 +77,8 @@
     ctx.moveTo(tailX, 0);
     ctx.lineTo(baseX, 0);
     ctx.strokeStyle = 'black';
-    ctx.lineWidth   = 4;
-    ctx.lineCap     = 'round';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
     ctx.stroke();
     // head
     ctx.beginPath();
@@ -91,17 +92,17 @@
   }
 
   // Grab contexts
-  const ctxChosen   = document.getElementById('chosenWheel').getContext('2d');
+  const ctxChosen = document.getElementById('chosenWheel').getContext('2d');
   const ctxUnchosen = isTreatment
     ? document.getElementById('unchosenWheel').getContext('2d')
     : null;
 
   // Arrow state
-  let angle   = initialAngle * Math.PI/180,
-      speed   = initialSpeed * Math.PI/180,
-      spinning=false,
-      slowing =false,
-      showUn  =false;
+  let angle = initialAngle * Math.PI/180,
+      speed = initialSpeed * Math.PI/180,
+      spinning = false,
+      slowing = false,
+      showUn = false;
 
   // Initial draw
   drawWheel(ctxChosen, chosenProbs);
@@ -144,7 +145,7 @@
   // Start spin
   document.getElementById('startBtn').onclick = () => {
     spinning = true; slowing = false; showUn = false;
-    speed    = initialSpeed * Math.PI/180;
+    speed = initialSpeed * Math.PI/180;
     document.getElementById('startBtn').disabled = true;
     document.getElementById('stopBtn').disabled  = false;
     frame();

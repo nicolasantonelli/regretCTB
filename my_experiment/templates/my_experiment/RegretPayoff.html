@@ -1,16 +1,16 @@
 {% extends "global/Page.html" %}
 {% block content %}
   <h3>Regret Task Payoff</h3>
-  <p>Your initial endowment was <strong>{{ initial }}</strong> tokens.</p>
-  <p>
+    <hr>
+  <p class="fs-5">Your initial endowment was <strong>{{ initial }}</strong> tokens.</p>
+  <p class="fs-5">
     After Task 1, you are left with <strong>{{ final_str }}</strong> tokens.
   </p>
 
 {% if is_treatment %}
-    <hr>
-    <p class="text-info">
-      Had you chosen the other lottery, you would have gained
-      <strong>{{ unchosen_str }}</strong> tokens.
+    <p class="fs-5 text-danger">
+      Had you chosen the other lottery, you would have been left with
+        <u><strong>{{ unchosen_total_str }}</strong></u> tokens.
     </p>
 {% endif %}
 

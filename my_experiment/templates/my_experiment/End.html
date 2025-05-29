@@ -2,13 +2,14 @@
 
 {% block content %}
   <h3>CTB Task Payoff</h3>
-  <p>The choice that was randomly selected for payment is <strong> Decision {{ selected }} </strong>.</p>
-  <p>You will receive:</p>
+    <hr>
+  <p class="fs-5">The choice that was randomly selected for payment is <strong> Decision {{ selected }} </strong>.</p>
+  <p class="fs-5">You will receive:</p>
   <ul>
-    <li><strong>{{ today_str }}</strong> tokens <em>today</em></li>
-    <li><strong>{{ future_str }}</strong> tokens <em>in three weeks</em></li>
+    <li class="fs-5"><strong>{{ today_str }}</strong> tokens <u><em>today</em></u></li>
+    <li class="fs-5"><strong>{{ future_str }}</strong> tokens <u><em>in three weeks</em></u></li>
   </ul>
-   <p>Please, click on the button at the bottom right of the screen to end the experiment.</p>
+   <p class="fs-5">Please, click on the button at the bottom right of the screen to end the experiment.</p>
 
 <div class="d-flex justify-content-end">
   <button

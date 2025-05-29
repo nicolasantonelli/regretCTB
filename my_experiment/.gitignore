@@ -1,13 +1,53 @@
-venv
-staticfiles
-./db.sqlite3
-.idea
-*~
-*.sqlite3
-_static_root
-_bots*s
-__temp*
+# Virtual environment
+venv/
+.venv/
+
+# Python cache
 __pycache__/
 *.py[cod]
-.DS_Store
+*$py.class
+
+# Editor/project files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# SQLite database
+db.sqlite3
+*.sqlite3
+
+# oTree artifacts
+_static_root/
+staticfiles/
+_bots*
 *.otreezip
+
+# Temporary files
+*~
+__temp*/
+
+# macOS
+.DS_Store
+
+# Environment / secret settings
+.env
+*.env
+
+# Logs
+*.log
+
+# Coverage reports
+htmlcov/
+.coverage
+
+# pytest / test artifacts
+.pytest_cache/
+
+# node_modules (if you ever add any npm-based tooling)
+node_modules/
+
+# Build artifacts (if you compile anything)
+dist/
+build/
+

@@ -19,7 +19,8 @@ SESSION_CONFIGS = [
         'name': 'my_experiment',
         'display_name': 'Regret + CTB Experiment',
         'num_demo_participants': 4,  # Adjust as needed
-        'app_sequence': ['my_experiment'],  # Replace with your app name
+        'app_sequence': ['my_experiment'],
+        'prolific-link': 'www.google.com',  # todo: Replace with your Prolific link
     },
 ]
 # e.g. EUR, GBP, CNY, JPY

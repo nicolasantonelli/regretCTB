@@ -1,8 +1,8 @@
 {% extends "global/Page.html" %}
 {% block content %}
   <h3>Please answer the following questions by selecting how much the statements below represent your own behavior.</h3>
-
-  <table class="table table-bordered text-center">
+<hr>
+  <table class="table table-bordered fs-5">
     <thead>
       <tr>
         <th></th>
@@ -13,6 +13,30 @@
         <th>Strongly agree</th>
       </tr>
     </thead>
+  {% block styles %}
+
+<style>
+  input[type="radio"] {
+    transform: scale(2);
+    margin: 5px;
+  }
+  /* First column (statements): left-align text and make it wider */
+  td:first-child {
+    text-align: left;
+    vertical-align: middle;
+    padding-left: 10px;
+    width: 60%;
+  }
+  /* All other cells: center content */
+  td:not(:first-child),
+  th {
+    text-align: center;
+    vertical-align: middle;
+  }
+</style>
+
+{% endblock %}
+
     <tbody>
       <tr>
         <td><em>Whenever I make a choice, I’m curious what would have happened if I’d chosen differently.</em></td>

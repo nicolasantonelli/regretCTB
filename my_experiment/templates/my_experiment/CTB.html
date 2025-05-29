@@ -1,16 +1,17 @@
 {% extends "global/Page.html" %}
 {% block content %}
   <h3>Convex Time Budget Task</h3>
-  <p>You have {{ budget }} tokens. Allocate between today and 3 weeks from now.</p>
+    <hr>
+  <p class="fs-5">You have {{ budget }} tokens. Allocate between today and 3 weeks from now.</p>
 
   {% for rate, fmt in rate_pairs %}
     <hr>
-    <p>
+    <p class="fs-5">
       <strong>Decision {{ forloop.counter }}</strong>
       (Rate: {{ fmt }}×)
     </p>
 
-    <label for="alloc_early{{ forloop.counter }}">Today:</label>
+    <label class="fs-5" for="alloc_early{{ forloop.counter }}">Today:</label>
     <input
       id="alloc_early{{ forloop.counter }}"
       type="number"
@@ -19,7 +20,7 @@
       required
     >
 
-    <label for="alloc_late{{ forloop.counter }}">3 Weeks:</label>
+    <label class="fs-5" for="alloc_late{{ forloop.counter }}">3 Weeks:</label>
     <input
       id="alloc_late{{ forloop.counter }}"
       type="number"

@@ -22,6 +22,10 @@ class Subsession(BaseSubsession):
         for p in self.get_players():
             # Randomly pick 'treatment' or 'control'
             p.treatment_group = random.choice(['treatment', 'control'])
+        if self.round_number == 1:
+            prolific = self.session.config.get("prolific-link", 60)  # default to 60 if not set
+            # You can store `time` on the session or pass it to players
+            self.session.vars["prolific-link"] = prolific  # optional storage
 
 
 class Group(BaseGroup):
