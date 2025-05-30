@@ -11,9 +11,9 @@ class C(BaseConstants):
     BUDGET = cu(100)
     INTEREST_RATES = [1, 1.05, 1.1, 1.15, 1.2]
     # Regret Task Constants
-    INITIAL_ENDOWMENT = cu(150)
-    LOTTERY_A = {"outcomes": [cu(100), cu(-50)], "probabilities": [0.5, 0.5]}
-    LOTTERY_B = {"outcomes": [cu(200), cu(-100)], "probabilities": [0.3, 0.7]}
+    INITIAL_ENDOWMENT = cu(20)
+    LOTTERY_A = {"outcomes": [cu(20), cu(-10)], "probabilities": [0.5, 0.5]}
+    LOTTERY_B = {"outcomes": [cu(80), cu(-20)], "probabilities": [0.25, 0.75]}
 
 
 class Subsession(BaseSubsession):
@@ -96,4 +96,3 @@ class Player(BasePlayer):
         label="Please insert your Prolific ID:",
         blank=False,  # forces them to type something
     )
-

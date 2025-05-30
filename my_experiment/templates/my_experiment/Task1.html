@@ -12,8 +12,8 @@
       <!-- static wheel A -->
       <canvas id="wheelA" width="200" height="200" class="mb-3"></canvas>
 
-      <p class="fs-5">50% chance to win 100 tokens</p>
-      <p class="fs-5">50% chance to lose 50 tokens</p>
+      <p class="fs-5">50% chance to win 20 tokens</p>
+      <p class="fs-5">50% chance to lose 10 tokens</p>
 
       <button
         type="submit"
@@ -32,8 +32,8 @@
       <!-- static wheel B -->
       <canvas id="wheelB" width="200" height="200" class="mb-3"></canvas>
 
-      <p class="fs-5">30% chance to win 200 tokens</p>
-      <p class="fs-5">70% chance to lose 100 tokens</p>
+      <p class="fs-5">25% chance to win 80 tokens</p>
+      <p class="fs-5">75% chance to lose 20 tokens</p>
 
       <button
         type="submit"
@@ -87,7 +87,7 @@
   drawStaticWheel(ctxA, probsA, Math.PI/2);
 
   // Wheel B: start at –90° (–π/2)
-  drawStaticWheel(ctxB, probsB, -Math.PI/2);
+  drawStaticWheel(ctxB, probsB, Math.PI/2);
 })();
 </script>
 {% endblock %}

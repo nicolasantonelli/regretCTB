@@ -169,8 +169,13 @@ class Task2(Page):
                 return f"Decision {i} violates the budget constraint."
 
     def before_next_page(self, timeout_happened=False):
-        # Randomly choose which decision is paid out
-        self.player.payoff_decision = random.randint(1, 5)
+        selected = random.randint(1, 5)
+        self.player.payoff_decision = selected
+        early = getattr(self.player, f'alloc_early{selected}')
+        late = getattr(self.player, f'alloc_late{selected}')
+        rate = C.INTEREST_RATES[selected - 1]
+        self.player.payoff_now = early
+        self.player.payoff_later = cu(float(late) * rate)
 
 
 class Payoff(Page):
@@ -238,26 +243,6 @@ class End(Page):
             'future_str': future_str,
         }
 
-    def before_next_page(self, timeout_happened=False):
-        # Randomly choose which of the 5 decisions is paid
-        self.player.payoff_decision = random.randint(1, 5)
 
-
-page_sequence = [
-    PrivacyPolicy,
-    ProlificPage,
-    Instructions,
-    Task1Instructions,
-    Task1,
-    SpinArrow,
-    Task1Payoff,
-    Task2Instructions,
-    Task2,
-    Payoff,
-    Task2After,
-    Questionnaire,
-
-]
-
-# page_sequence = [PrivacyPolicy, ProlificPage, Instructions, Task1Instructions,
-# Task1, SpinArrow, Task1Payoff, Task2Instructions, Task2, Task2After, Questionnaire, End]
+page_sequence = [PrivacyPolicy, ProlificPage, Instructions, Task1Instructions,
+                 Task1, SpinArrow, Task1Payoff, Task2Instructions, Task2, Task2After, Questionnaire, End]
