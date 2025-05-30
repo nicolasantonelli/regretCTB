@@ -1,20 +1,5 @@
 {% extends "global/Page.html" %}
-{% block content %}
-  <h3>Please answer the following questions by selecting how much the statements below represent your own behavior.</h3>
-<hr>
-  <table class="table table-bordered fs-5">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Strongly disagree</th>
-        <th>Disagree</th>
-        <th>Neither agree nor disagree</th>
-        <th>Agree</th>
-        <th>Strongly agree</th>
-      </tr>
-    </thead>
-  {% block styles %}
-
+{% block styles %}
 <style>
   input[type="radio"] {
     transform: scale(2);
@@ -34,8 +19,22 @@
     vertical-align: middle;
   }
 </style>
-
 {% endblock %}
+
+{% block content %}
+  <h3>Please answer the following questions by selecting how much the statements below represent your own behavior.</h3>
+<hr>
+  <table class="table table-bordered fs-5">
+    <thead style="background-color:white; position:sticky; top:0; z-index:2; border-bottom:2px solid #dee2e6;">
+      <tr>
+        <th></th>
+        <th>Strongly disagree</th>
+        <th>Disagree</th>
+        <th>Neither agree nor disagree</th>
+        <th>Agree</th>
+        <th>Strongly agree</th>
+      </tr>
+    </thead>
 
     <tbody>
       <tr>

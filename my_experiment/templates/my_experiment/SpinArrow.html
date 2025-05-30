@@ -29,11 +29,6 @@
 
   <input type="hidden" name="stopped_angle" id="stopped_angle">
 
-  <div class="next-button-container justify-content-end" id="nextContainer" style="display:none;">
-    <button type="submit" class="btn btn-primary btn-lg otree-btn-next">
-      Next
-    </button>
-  </div>
 {% endblock %}
 
 {% block scripts %}
@@ -113,34 +108,39 @@
   }
 
   function frame() {
-    if (!spinning) return;
-    angle += speed;
-    if (slowing) speed *= 0.97;
+  if (!spinning) return;
+  angle += speed;
+  if (slowing) speed *= 0.97;
 
-    // redraw chosen
-    ctxChosen.clearRect(0,0,300,300);
-    drawWheel(ctxChosen, chosenProbs);
-    drawArrow(ctxChosen, angle, true);
+  // redraw chosen
+  ctxChosen.clearRect(0, 0, 300, 300);
+  drawWheel(ctxChosen, chosenProbs);
+  drawArrow(ctxChosen, angle, true);
 
-    // redraw unchosen only for treatment
-    if (ctxUnchosen) {
-      ctxUnchosen.clearRect(0,0,300,300);
-      drawWheel(ctxUnchosen, unchosenProbs);
-      drawArrow(ctxUnchosen, angle, showUn);
-    }
-
-    if (slowing && speed < 0.001) {
-      spinning = false;
-      // record angle
-      document.getElementById('stopped_angle').value = (angle * 180/Math.PI) % 360;
-      // reveal unchosen arrow if treatment
-      showUn = true;
-      // reveal Next button
-      document.getElementById('nextContainer').style.display = 'block';
-      return;
-    }
-    requestAnimationFrame(frame);
+  // redraw unchosen (treatment only)
+  if (ctxUnchosen) {
+    ctxUnchosen.clearRect(0, 0, 300, 300);
+    drawWheel(ctxUnchosen, unchosenProbs);
+    drawArrow(ctxUnchosen, angle, showUn);
   }
+
+  if (slowing && speed < 0.001) {
+    spinning = false;
+    // record final angle
+    document.getElementById('stopped_angle').value = (angle * 180/Math.PI) % 360;
+    // reveal unchosen arrow immediately
+    showUn = true;
+    // after 1s, auto-submit the form
+    setTimeout(() => {
+      document.querySelector('form').submit();
+    }, 1000);
+    return;    // <-- exit so we don't queue another frame
+  }
+
+  // Only queue the next animation frame—no auto-submit here
+  requestAnimationFrame(frame);
+}
+
 
   // Start spin
   document.getElementById('startBtn').onclick = () => {

@@ -21,11 +21,11 @@ class ProlificPage(Page):
     form_fields = ['prolific_id']
 
 
-class InstructionsRegret(Page):
+class Task1Instructions(Page):
     pass
 
 
-class RegretTask(Page):
+class Task1(Page):
     form_model = 'player'
     form_fields = ['chosen_lottery']
 
@@ -98,7 +98,7 @@ class SpinArrow(Page):
         p.participant.endowment = C.INITIAL_ENDOWMENT + p.outcome
 
 
-class RegretPayoff(Page):
+class Task1Payoff(Page):
     def vars_for_template(self):
         p = self.player
         initial = C.INITIAL_ENDOWMENT   # from your constants
@@ -112,6 +112,12 @@ class RegretPayoff(Page):
         unchosen_gain = p.unchosen_outcome
         unchosen_total = initial + unchosen_gain
 
+        if p.chosen_lottery == 'A':
+            chosen = C.LOTTERY_A
+            unchosen = C.LOTTERY_B
+        else:
+            chosen = C.LOTTERY_B
+            unchosen = C.LOTTERY_A
         return {
             'initial': initial,
             'gained_str': gained_str,
@@ -119,17 +125,23 @@ class RegretPayoff(Page):
             'final_str': final_str,
             'is_treatment': p.treatment_group == 'treatment',
             'unchosen_total_str': f"{unchosen_total:.0f}",
+            'chosen_probs': chosen['probabilities'],
+            'unchosen_probs': unchosen['probabilities'],
+            'stopped_angle': p.stopped_angle,
+            'treatment': self.player.treatment_group,
+
         }
+
 # ==============================================================================
 # Convex Time Budget Task
 # ==============================================================================
 
 
-class InstructionsCTB(Page):
+class Task2Instructions(Page):
     pass
 
 
-class CTB(Page):
+class Task2(Page):
     form_model = 'player'
     form_fields = [
         'alloc_early1', 'alloc_late1',
@@ -181,7 +193,7 @@ class Payoff(Page):
         }
 
 
-class AfterCTB(Page):
+class Task2After(Page):
     pass
 
 
@@ -231,5 +243,21 @@ class End(Page):
         self.player.payoff_decision = random.randint(1, 5)
 
 
-page_sequence = [PrivacyPolicy, ProlificPage, Instructions, InstructionsRegret,
-                 RegretTask, SpinArrow, RegretPayoff, InstructionsCTB, CTB, AfterCTB, Questionnaire, End]
+page_sequence = [
+    PrivacyPolicy,
+    ProlificPage,
+    Instructions,
+    Task1Instructions,
+    Task1,
+    SpinArrow,
+    Task1Payoff,
+    Task2Instructions,
+    Task2,
+    Payoff,
+    Task2After,
+    Questionnaire,
+
+]
+
+# page_sequence = [PrivacyPolicy, ProlificPage, Instructions, Task1Instructions,
+# Task1, SpinArrow, Task1Payoff, Task2Instructions, Task2, Task2After, Questionnaire, End]
