@@ -2,29 +2,41 @@
 {% load otree static %}
 
 {% block content %}
-  <h3>Spin the Arrow</h3>
+  {% if player.selected_language == 'it' %}
+    <h3 class="text-center text-primary fw-semibold mb-4">Gira la freccia</h3>
+  {% else %}
+    <h3 class="text-center text-primary fw-semibold mb-4">Spin the Arrow</h3>
+  {% endif %}
     <hr>
-  <p class="fs-5">You’ll spin the arrow on your chosen lottery, and the unchosen lottery will spin in parallel (its arrow hidden until you stop).</p>
+  {% if player.selected_language == 'it' %}
+    <p class="fs-5">Clicca "Avvia" per far girare la freccia e "Ferma" per fermarla.</p>
+  {% else %}
+    <p class="fs-5">Click "Start" to spin the arrow and "Stop" to stop it.</p>
+  {% endif %}
 
   <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start; margin-bottom: 20px;">
     <!-- Chosen always shows -->
     <div style="text-align: center;">
-      <div><strong>Chosen Lottery</strong></div>
+      <div><strong>{% if player.selected_language == 'it' %}Lotteria scelta{% else %}Chosen Lottery{% endif %}</strong></div>
       <canvas id="chosenWheel" width="300" height="300"></canvas>
     </div>
 
     <!-- Only render this block for the treatment group -->
     {% if treatment == 'treatment' %}
       <div style="text-align: center;">
-        <div><strong>Unchosen Lottery</strong></div>
+        <div><strong>{% if player.selected_language == 'it' %}Lotteria non scelta{% else %}Unchosen Lottery{% endif %}</strong></div>
         <canvas id="unchosenWheel" width="300" height="300"></canvas>
       </div>
     {% endif %}
   </div>
 
   <div style="text-align: center; margin-bottom: 20px;">
-    <button type="button" id="startBtn" class="btn btn-success btn-lg">Start Spin</button>
-    <button type="button" id="stopBtn" class="btn btn-danger btn-lg" disabled>Stop Spin</button>
+    <button type="button" id="startBtn" class="btn btn-success btn-lg">
+      {% if player.selected_language == 'it' %}Avvia{% else %}Start Spin{% endif %}
+    </button>
+    <button type="button" id="stopBtn" class="btn btn-danger btn-lg" disabled>
+      {% if player.selected_language == 'it' %}Ferma{% else %}Stop Spin{% endif %}
+    </button>
   </div>
 
   <input type="hidden" name="stopped_angle" id="stopped_angle">

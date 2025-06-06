@@ -13,6 +13,8 @@ SESSION_FIELDS = []
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
 LANGUAGE_CODE = 'en'
+USE_I18N = True
+USE_L10N = True
 INSTALLED_APPS = ['my_experiment']
 SESSION_CONFIGS = [
     {

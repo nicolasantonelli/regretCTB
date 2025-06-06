@@ -7,6 +7,10 @@ from .models import C
 # Regret Elicitation Task
 # ==============================================================================
 
+class LanguageChoice(Page):
+    form_model = 'player'
+    form_fields = ['selected_language']
+
 class PrivacyPolicy(Page):
     form_model = 'player'
     form_fields = ['confirm_age', 'confirm_withdraw', 'confirm_privacy']
@@ -14,11 +18,6 @@ class PrivacyPolicy(Page):
 
 class Instructions(Page):
     pass
-
-
-class ProlificPage(Page):
-    form_model = 'player'
-    form_fields = ['prolific_id']
 
 
 class Task1Instructions(Page):
@@ -31,6 +30,7 @@ class Task1(Page):
 
     def vars_for_template(self):
         return {
+            'language': self.player.selected_language,
             'prob_a': C.LOTTERY_A['probabilities'],
             'prob_b': C.LOTTERY_B['probabilities'],
         }
@@ -39,7 +39,6 @@ class Task1(Page):
         # Randomize arrow parameters
         self.player.arrow_angle = random.uniform(0, 360)
         self.player.arrow_speed = random.uniform(15, 25)
-        # todo: random player treatment (posso decidere la percentuale di control e di treatment)
 
 
 class SpinArrow(Page):
@@ -54,6 +53,7 @@ class SpinArrow(Page):
             chosen = C.LOTTERY_B
             unchosen = C.LOTTERY_A
         return {
+            'language': self.player.selected_language,
             'initial_angle': self.player.arrow_angle,
             'initial_speed': self.player.arrow_speed,
             'lottery': chosen,
@@ -64,7 +64,13 @@ class SpinArrow(Page):
 
     def before_next_page(self, timeout_happened=False):
         p = self.player
-        spin_angle = p.stopped_angle % 360  # Renamed from 'angle' to 'spin_angle'
+        spin_angle = p.stopped_angle % 360
+        if p.chosen_lottery == 'A':
+            chosen = C.LOTTERY_A
+            unchosen = C.LOTTERY_B
+        else:
+            chosen = C.LOTTERY_B
+            unchosen = C.LOTTERY_A
 
         def get_outcome(test_angle, probs, outcomes):
             """
@@ -86,31 +92,33 @@ class SpinArrow(Page):
                 start_angle = end_angle
             return outcomes[-1]  # fallback
 
-        if p.chosen_lottery == 'A':
-            chosen = C.LOTTERY_A
-            unchosen = C.LOTTERY_B
-        else:
-            chosen = C.LOTTERY_B
-            unchosen = C.LOTTERY_A
-
         p.outcome = get_outcome(spin_angle, chosen['probabilities'], chosen['outcomes'])
         p.unchosen_outcome = get_outcome(spin_angle, unchosen['probabilities'], unchosen['outcomes'])
-        p.participant.endowment = C.INITIAL_ENDOWMENT + p.outcome
+        p.participant.endowment = p.outcome
+        if p.treatment_group == 'treatment':
+            if p.outcome > p.unchosen_outcome:
+                p.regret_rejoice = 'rejoicing'
+            elif p.outcome < p.unchosen_outcome:
+                p.regret_rejoice = 'regret'
+            else:
+                p.regret_rejoice = 'neutral'
+        else:
+            p.regret_rejoice = None
 
 
 class Task1Payoff(Page):
     def vars_for_template(self):
         p = self.player
-        initial = C.INITIAL_ENDOWMENT   # from your constants
+        #initial = C.INITIAL_ENDOWMENT   # from your constants
         gained = p.outcome             # the lottery result stored earlier
-        final = initial + gained
+        final = gained  #+ initial
 
         # Pre‑format as strings so templates need no filters
         gained_str = f"{gained:.0f}"
         final_str = f"{final:.0f}"
         unchosen_str = f"{p.unchosen_outcome:.0f}"
         unchosen_gain = p.unchosen_outcome
-        unchosen_total = initial + unchosen_gain
+        unchosen_total = unchosen_gain
 
         if p.chosen_lottery == 'A':
             chosen = C.LOTTERY_A
@@ -119,7 +127,8 @@ class Task1Payoff(Page):
             chosen = C.LOTTERY_B
             unchosen = C.LOTTERY_A
         return {
-            'initial': initial,
+            #'initial': initial,
+            'language': self.player.selected_language,
             'gained_str': gained_str,
             'unchosen_str': unchosen_str,
             'final_str': final_str,
@@ -129,6 +138,8 @@ class Task1Payoff(Page):
             'unchosen_probs': unchosen['probabilities'],
             'stopped_angle': p.stopped_angle,
             'treatment': self.player.treatment_group,
+            'won': p.outcome >= 0,
+            'unchosen_won': p.unchosen_outcome >= 0,
 
         }
 
@@ -154,6 +165,7 @@ class Task2(Page):
     def vars_for_template(self):
         # Use a fixed budget of 100 for everyone
         return {
+            'language': self.player.selected_language,
             'budget': C.BUDGET,
             'rate_pairs': [
                 (r, f"{r:.2f}") for r in C.INTEREST_RATES
@@ -178,28 +190,10 @@ class Task2(Page):
         self.player.payoff_later = cu(float(late) * rate)
 
 
-class Payoff(Page):
-    def vars_for_template(self):
-        selected = random.randint(1, 5)
-        p = self.player
-        p.payoff_decision = selected
-
-        early = getattr(p, f'alloc_early{selected}')
-        late = getattr(p, f'alloc_late{selected}')
-        rate = C.INTEREST_RATES[selected - 1]
-
-        p.payoff_now = early
-        p.payoff_later = cu(float(late) * rate)
-
-        return {
-            'endowment': p.participant.endowment,
-            'payoff_now': p.payoff_now,
-            'payoff_later': p.payoff_later,
-        }
-
-
 class Task2After(Page):
-    pass
+    def vars_for_template(self):
+        # Use a fixed budget of 100 for everyone
+        return {'language': self.player.selected_language}
 
 
 class Questionnaire(Page):
@@ -217,6 +211,10 @@ class Questionnaire(Page):
         'q_regret_counterfactual',
     ]
 
+
+class Sample (Page):
+    form_model = 'player'
+    form_fields = ['age', 'gender', 'education', 'employment']
 
 class End(Page):
     def vars_for_template(self, timeout_happened=False):
@@ -238,11 +236,12 @@ class End(Page):
         future_str = f"{payoff_future:.2f}"
 
         return {
+            'language': self.player.selected_language,
             'selected': selected,
             'today_str': today_str,
             'future_str': future_str,
         }
 
 
-page_sequence = [PrivacyPolicy, ProlificPage, Instructions, Task1Instructions,
-                 Task1, SpinArrow, Task1Payoff, Task2Instructions, Task2, Task2After, Questionnaire, End]
+page_sequence = [LanguageChoice, PrivacyPolicy, Instructions, Task1Instructions,
+                 Task1, SpinArrow, Task1Payoff, Task2Instructions, Task2, Task2After, Questionnaire, Sample, End]

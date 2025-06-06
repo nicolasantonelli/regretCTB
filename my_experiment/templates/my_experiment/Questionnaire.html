@@ -1,4 +1,5 @@
 {% extends "global/Page.html" %}
+{% load i18n %}
 {% block styles %}
 <style>
   input[type="radio"] {
@@ -10,7 +11,7 @@
     text-align: left;
     vertical-align: middle;
     padding-left: 10px;
-    width: 60%;
+    width: 80%;
   }
   /* All other cells: center content */
   td:not(:first-child),
@@ -22,79 +23,215 @@
 {% endblock %}
 
 {% block content %}
-  <h3>Please answer the following questions by selecting how much the statements below represent your own behavior.</h3>
+<div class="container bg-white p-4 rounded shadow-sm">
+  <h3 class="mb-4 fw-semibold text-primary">
+    {% if player.selected_language == 'it' %}
+      Si prega di rispondere alle seguenti domande selezionando quanto le affermazioni qui sotto rappresentano il proprio comportamento.
+    {% else %}
+      Please answer the following questions by selecting how much the statements below represent your own behavior.
+    {% endif %}
+  </h3>
 <hr>
-  <table class="table table-bordered fs-5">
-    <thead style="background-color:white; position:sticky; top:0; z-index:2; border-bottom:2px solid #dee2e6;">
+  <table class="table table-bordered table-hover fs-5 text-center">
+    <thead class="bg-light sticky-top border-bottom border-2">
       <tr>
         <th></th>
-        <th>Strongly disagree</th>
-        <th>Disagree</th>
-        <th>Neither agree nor disagree</th>
-        <th>Agree</th>
-        <th>Strongly agree</th>
+        <th>
+          {% if player.selected_language == 'it' %}
+            Completamente in disaccordo
+          {% else %}
+            Strongly disagree
+          {% endif %}
+        </th>
+        <th>
+          {% if player.selected_language == 'it' %}
+            In disaccordo
+          {% else %}
+            Disagree
+          {% endif %}
+        </th>
+        <th>
+          {% if player.selected_language == 'it' %}
+            Né d'accordo né in disaccordo
+          {% else %}
+            Neither agree nor disagree
+          {% endif %}
+        </th>
+        <th>
+          {% if player.selected_language == 'it' %}
+            D'accordo
+          {% else %}
+            Agree
+          {% endif %}
+        </th>
+        <th>
+          {% if player.selected_language == 'it' %}
+            Completamente d'accordo
+          {% else %}
+            Strongly agree
+          {% endif %}
+        </th>
       </tr>
     </thead>
 
     <tbody>
       <tr>
-        <td><em>Whenever I make a choice, I’m curious what would have happened if I’d chosen differently.</em></td>
+        <td class="text-start text-secondary bg-light">
+          <em>
+            {% if player.selected_language == 'it' %}
+              Ogni volta che faccio una scelta, sono curioso/a di sapere cosa sarebbe successo se avessi scelto diversamente.
+            {% else %}
+              Whenever I make a choice, I’m curious what would have happened if I’d chosen differently.
+            {% endif %}
+          </em>
+        </td>
         {% for val in [1,2,3,4,5] %}
-          <td><input type="radio" name="q_regret_curiosity" value="{{ val }}" required></td>
+          <td>
+            <input type="radio" name="q_regret_curiosity" value="{{ val }}" required>
+          </td>
         {% endfor %}
       </tr>
       <tr>
-        <td><em>If I make a choice and it turns out well, I still feel like something of a failure if I find out that another choice would have turned out better.</em></td>
+        <td class="text-start text-secondary bg-light">
+          <em>
+            {% if player.selected_language == 'it' %}
+              Se faccio una scelta ed il risultato è buono, mi sento comunque un po' un fallimento se scopro che un'altra scelta sarebbe andata meglio.
+            {% else %}
+              If I make a choice and it turns out well, I still feel like something of a failure if I find out that another choice would have turned out better.
+            {% endif %}
+          </em>
+        </td>
         {% for val in [1,2,3,4,5] %}
-          <td><input type="radio" name="q_regret_failure" value="{{ val }}" required></td>
+          <td>
+            <input type="radio" name="q_regret_failure" value="{{ val }}" required>
+          </td>
         {% endfor %}
       </tr>
       <tr>
-        <td><em>When I think about how I’m doing in life, I often assess opportunities I have passed up.</em></td>
+        <td class="text-start text-secondary bg-light">
+          <em>
+            {% if player.selected_language == 'it' %}
+              Quando penso a come sta andando la mia vita, spesso valuto le opportunità che ho lasciato andare.
+            {% else %}
+              When I think about how I’m doing in life, I often assess opportunities I have passed up.
+            {% endif %}
+          </em>
+        </td>
         {% for val in [1,2,3,4,5] %}
-          <td><input type="radio" name="q_assess_opportunities" value="{{ val }}" required></td>
+          <td>
+            <input type="radio" name="q_assess_opportunities" value="{{ val }}" required>
+          </td>
         {% endfor %}
       </tr>
       <tr>
-        <td><em>No matter what I do, I have the highest standards for myself.</em></td>
+        <td class="text-start text-secondary bg-light">
+          <em>
+            {% if player.selected_language == 'it' %}
+              Qualunque cosa io faccia, ho standard altissimi per me stesso/a.
+            {% else %}
+              No matter what I do, I have the highest standards for myself.
+            {% endif %}
+          </em>
+        </td>
         {% for val in [1,2,3,4,5] %}
-          <td><input type="radio" name="q_high_standards" value="{{ val }}" required></td>
+          <td>
+            <input type="radio" name="q_high_standards" value="{{ val }}" required>
+          </td>
         {% endfor %}
       </tr>
       <tr>
-        <td><em>Choosing what movie/tv show to watch is really difficult. I’m always struggling to pick the best option.</em></td>
+        <td class="text-start text-secondary bg-light">
+          <em>
+            {% if player.selected_language == 'it' %}
+              Scegliere quale film o serie TV guardare è davvero difficile. Faccio sempre fatica a scegliere l'opzione migliore.
+            {% else %}
+              Choosing what movie or tv show to watch is really difficult. I’m always struggling to pick the best option.
+            {% endif %}
+          </em>
+        </td>
         {% for val in [1,2,3,4,5] %}
-          <td><input type="radio" name="q_choice_difficulty" value="{{ val }}" required></td>
+          <td>
+            <input type="radio" name="q_choice_difficulty" value="{{ val }}" required>
+          </td>
         {% endfor %}
       </tr>
       <tr>
-        <td><em>When shopping, I have a hard time finding clothing that I really love.</em></td>
+        <td class="text-start text-secondary bg-light">
+          <em>
+            {% if player.selected_language == 'it' %}
+              Quando faccio shopping, ho difficoltà a trovare vestiti che mi piacciano davvero.
+            {% else %}
+              When shopping, I have a hard time finding clothing that I really love.
+            {% endif %}
+          </em>
+        </td>
         {% for val in [1,2,3,4,5] %}
-          <td><input type="radio" name="q_shopping_difficulty" value="{{ val }}" required></td>
+          <td>
+            <input type="radio" name="q_shopping_difficulty" value="{{ val }}" required>
+          </td>
         {% endfor %}
       </tr>
       <tr>
-        <td><em>I consider how things might be in the future and try to influence those things with my day-to-day behavior.</em></td>
+        <td class="text-start text-secondary bg-light">
+          <em>
+            {% if player.selected_language == 'it' %}
+              Considero come potrebbero andare le cose in futuro e cerco di influenzarle con il mio comportamento quotidiano.
+            {% else %}
+              I consider how things might be in the future and try to influence those things with my day-to-day behavior.
+            {% endif %}
+          </em>
+        </td>
         {% for val in [1,2,3,4,5] %}
-          <td><input type="radio" name="q_future_thinking" value="{{ val }}" required></td>
+          <td>
+            <input type="radio" name="q_future_thinking" value="{{ val }}" required>
+          </td>
         {% endfor %}
       </tr>
       <tr>
-        <td><em>I am willing to sacrifice my immediate happiness or well-being in order to achieve future outcomes.</em></td>
+        <td class="text-start text-secondary bg-light">
+          <em>
+            {% if player.selected_language == 'it' %}
+              Sono disposto a sacrificare la mia felicità o il mio benessere immediati per raggiungere risultati futuri.
+            {% else %}
+              I am willing to sacrifice my immediate happiness or well-being in order to achieve future outcomes.
+            {% endif %}
+          </em>
+        </td>
         {% for val in [1,2,3,4,5] %}
-          <td><input type="radio" name="q_sacrifice" value="{{ val }}" required></td>
+          <td>
+            <input type="radio" name="q_sacrifice" value="{{ val }}" required>
+          </td>
         {% endfor %}
       </tr>
       <tr>
-        <td><em>I only act to satisfy immediate concerns, figuring the future will take care of itself.</em></td>
+        <td class="text-start text-secondary bg-light">
+          <em>
+            {% if player.selected_language == 'it' %}
+              Agisco solo per soddisfare le esigenze immediate, pensando che il futuro si sistemerà da solo.
+            {% else %}
+              I only act to satisfy immediate concerns, figuring the future will take care of itself.
+            {% endif %}
+          </em>
+        </td>
         {% for val in [1,2,3,4,5] %}
-          <td><input type="radio" name="q_immediate_concerns" value="{{ val }}" required></td>
+          <td>
+            <input type="radio" name="q_immediate_concerns" value="{{ val }}" required>
+          </td>
         {% endfor %}
       </tr>
-     <tr>
-        <td><em>“Had I made a different choice, things would have turned out better for me.”</em></td>
+      <tr>
+        <td class="text-start text-secondary bg-light">
+          <em>
+            {% if player.selected_language == 'it' %}
+              "Riflettendo sull'esperimento appena svolto, credo che se avessi fatto una scelta diversa, le cose sarebbero andate meglio per me."
+            {% else %}
+              “Thinking about the experiment I just took part in, I believe that, had I made a different choice, things would have turned out better for me.”
+            {% endif %}
+          </em>
+        </td>
         {% for val in [1,2,3,4,5] %}
-          <td><input
+          <td>
+            <input
                  type="radio"
                  name="q_regret_counterfactual"
                  value="{{ val }}"
@@ -110,8 +247,13 @@
     type="submit"
     class="btn btn-primary btn-lg otree-btn-next"
   >
-    Next
+    {% if player.selected_language == 'it' %}
+      Avanti
+    {% else %}
+      Next
+    {% endif %}
   </button>
+</div>
 </div>
 
 {% endblock %}

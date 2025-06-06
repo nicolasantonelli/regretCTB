@@ -1,18 +1,21 @@
 {% extends "global/Page.html" %}
 
 {% block content %}
-  <p class="fs-5">You have now completed the second task of the experiment.<p>
-<p class="fs-5">Please, click on the arrow at the bottom right of the screen to proceed.
-In the next page, you will be asked to complete a brief questionnaire.
-</p>
-<div class="d-flex justify-content-end">
-  <button
-    type="submit"
-    class="btn btn-primary btn-lg otree-btn-next"
-  >
-    Next
-  </button>
-</div>
+    {% if player.selected_language == 'en' %}
+        <p class="fs-5">You have now completed the second task of the experiment, you will find out the outcome later.</p>
+        <p class="fs-5">Please, click on "Next" at the bottom right of the screen to proceed.
+        In the next pages, you will be asked to complete a brief questionnaire.</p>
+    {% elif player.selected_language == 'it' %}
+        <p class="fs-5">Hai appena completato il secondo compito dell'esperimento.</p>
+        <p class="fs-5">Per favore, clicca su "Avanti" in basso a destra per continuare.
+        Nelle prossime pagine ti verrà chiesto di completare un breve questionario, poi scoprirai l'esito del secondo compito.</p>
+    {% endif %}
+    <div class="d-flex justify-content-end">
+        <button
+            type="submit"
+            class="btn btn-primary btn-lg otree-btn-next"
+        >
+            {% if player.selected_language == 'it' %}Avanti{% else %}Next{% endif %}
+        </button>
+    </div>
 {% endblock %}
-
-

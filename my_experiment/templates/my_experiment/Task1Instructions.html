@@ -2,50 +2,167 @@
 {% load otree static %}
 
 {% block content %}
-  <h2>Task 1 Instructions</h2>
+  {% if player.selected_language == 'it' %}
+    <h2 class="text-center text-primary fw-semibold mb-4">Compito 1: Istruzioni</h2>
+  {% else %}
+    <h2 class="text-center text-primary fw-semibold mb-4"> Task 1 Instructions</h2>
+  {% endif %}
 <hr>
-  <p class="fs-5">
-    In the first task, you will be asked to choose between two lotteries.
-    Each lottery is represented by a circle divided into two colored
-    sections, each showing a possible outcome. Below is a visual representation:
-  <div class="text-center my-4">
-    <img
-      src="{% static 'my_experiment/lotteryexample.png' %}"
-      alt="Illustration of lottery wheel"
-      style="max-width:100%; height:auto;"
-    >
-  </div>
-  </p>
+  {% if player.selected_language == 'it' %}
+    <p class="fs-5">
+      Nel primo compito, ti verrà chiesto di scegliere tra due lotterie.
+      Ogni lotteria è rappresentata da un cerchio diviso in due sezioni colorate,
+      ciascuna che mostra un possibile esito. Di seguito è riportata un'immagine:
+      <div class="text-center my-4">
+        <img
+          src="{% static 'my_experiment/lotteryexample.png' %}"
+          alt="Illustration of lottery wheel"
+          class="img-fluid"
+          style="width:300px; height:auto;"
+        >
+      </div>
+    </p>
+  {% else %}
+    <p class="fs-5">
+      In the first task, you will be asked to choose between two lotteries.
+      Each lottery is represented by a circle divided into two colored
+      sections, each showing a possible outcome. Below is a visual representation:
+      <div class="text-center my-4">
+        <img
+          src="{% static 'my_experiment/lotteryexample.png' %}"
+          alt="Illustration of lottery wheel"
+          class="img-fluid"
+          style="width:300px; height:auto;"
+        >
+      </div>
+    </p>
+  {% endif %}
 
-  <p class="fs-5">
-    You will receive an endowment of <strong>50 tokens</strong>.
-  </p>
+  <!-- <p class="fs-5"> You are given an initial endowment of <strong>20 tokens</strong> to cover potential losses. </p> -->
 
-  <p class="fs-5"><strong>You will have to:</strong></p>
-  <ul class="fs-5">
-    <li>Select the lottery you prefer;</li>
-    <li>Click on the <strong>START</strong> button to spin the arrow;</li>
-    <li>Click on the <strong>STOP</strong> button to slow down and stop the arrow.</li>
-  </ul>
+  {% if player.selected_language == 'it' %}
+    <p class="fs-5"><strong>Dovrai:</strong></p>
+    <ul class="fs-5">
+      <li>Selezionare la lotteria che preferisci;</li>
+      <li>Fare clic sul pulsante <strong>START</strong> per far girare la freccia;</li>
+      <li>Fare clic sul pulsante <strong>STOP</strong> per rallentare e fermare la freccia.</li>
+    </ul>
+  {% else %}
+    <p class="fs-5"><strong>You will have to:</strong></p>
+    <ul class="fs-5">
+      <li>Select the lottery you prefer;</li>
+      <li>Click on the <strong>START</strong> button to spin the arrow;</li>
+      <li>Click on the <strong>STOP</strong> button to slow down and stop the arrow.</li>
+    </ul>
+  {% endif %}
 
-  <p class="fs-5">
-    The outcome of the lottery will be determined by the section in
-    which the arrow stops.
-  </p>
+  {% if player.selected_language == 'it' %}
+    <p class="fs-5">
+      Il risultato della lotteria sarà determinato dalla sezione in cui si fermerà la freccia.
+    </p>
+  {% else %}
+    <p class="fs-5">
+      The outcome of the lottery will be determined by the section in
+      which the arrow stops.
+    </p>
+  {% endif %}
 
+  {% if player.selected_language == 'it' %}
+    <div class="alert alert-primary rounded">
+      <p class="fs-5"><strong>Esempio:</strong> Se la freccia si ferma nel segmento rosso (probabilità del 50%),
+      perdi 5 Euro. Se si ferma nel segmento verde (probabilità del 50%), vinci 5 Euro.
+      </p>
+    </div>
+  {% else %}
+    <div class="alert alert-primary rounded">
+      <p class="fs-5"><strong>Worked example:</strong> If the arrow stops in the red segment (50% chance),
+      you lose 5 Euros. If it stops in the green segment (50% chance), you win 5 Euros.
+      </p>
+    </div>
+  {% endif %}
 
-  <div class="alert alert-secondary">
-    <p class="fs-5"><strong>Worked example:</strong> If the arrow stops in the dark grey segment (50% chance),
-    you lose 5 tokens. If it stops in the light grey segment (50% chance), you win 5 tokens.
-        The outcome of the lottery will then be added to or subtracted from your initial endowment. </p>
-  </div>
-
+  {% if player.selected_language == 'it' %}
+    <div class="border border-4 border-primary rounded p-3 bg-light mb-4">
+      <p class="fs-5 mb-2">
+        <strong>Domanda di verifica:</strong> Per continuare, rispondi correttamente alla seguente domanda.<br>
+        Quanti esiti diversi può avere ciascuna lotteria? (Rispondi con un numero, senza lettere o simboli)
+      </p>
+      <input type="text" name="task1_check_answer" class="form-control" required style="max-width: 300px; font-size: 1.2rem; padding: 0.75rem; border: 2px solid #0d6efd;" placeholder="Inserisci il numero di esiti">
+    </div>
+  {% else %}
+    <div class="border border-4 border-primary rounded p-3 bg-light mb-4">
+      <p class="fs-5 mb-2">
+        <strong>Comprehension check:</strong> To proceed, you must answer the following question correctly.<br>
+        How many different outcomes can each lottery give you? (Answer with numbers only, no letters or symbols)
+      </p>
+      <input type="text" name="task1_check_answer" class="form-control" required style="max-width: 300px; font-size: 1.2rem; padding: 0.75rem; border: 2px solid #0d6efd;" placeholder="Enter number of outcomes">
+    </div>
+  {% endif %}
   <div class="d-flex justify-content-end">
-  <button
-    type="submit"
-    class="btn btn-primary btn-lg otree-btn-next"
-  >
-    Next
-  </button>
-</div>
+    <button
+      type="submit"
+      class="btn btn-primary btn-lg otree-btn-next"
+    >
+      Next
+    </button>
+  </div>
+
+<script>
+{% if player.selected_language == 'it' %}
+  const errorMessage = "Risposta errata. Riprova.";
+{% else %}
+  const errorMessage = "Wrong answer. Please try again.";
+{% endif %}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const input = document.querySelector('input[name="task1_check_answer"]');
+
+    form.addEventListener('submit', function (e) {
+        // Grab the Next button inside this form
+        const nextBtn = form.querySelector('button[type="submit"]');
+        const value = input.value.trim();
+        const correctAnswer = '2';
+
+        // If the answer is incorrect, prevent form submission and show error
+        if (value !== correctAnswer) {
+            e.preventDefault();
+            input.classList.add('is-invalid');
+
+            if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('invalid-feedback')) {
+                const error = document.createElement('div');
+                error.className = 'invalid-feedback d-block';
+                error.textContent = errorMessage;
+                input.after(error);
+            }
+
+            // Re-enable Next button immediately after oTree disables it
+            setTimeout(function() {
+                nextBtn.disabled = false;
+                nextBtn.classList.remove('disabled');
+            }, 0);
+
+        } else {
+            // Correct answer: clear any error and allow oTree to submit naturally
+            input.classList.remove('is-invalid');
+            const errorEl = input.nextElementSibling;
+            if (errorEl && errorEl.classList.contains('invalid-feedback')) {
+                errorEl.remove();
+            }
+            // No e.preventDefault() here
+        }
+    });
+
+    input.addEventListener('input', function () {
+        // Clear error styling/message upon any new input
+        if (input.classList.contains('is-invalid')) {
+            input.classList.remove('is-invalid');
+            const errorEl = input.nextElementSibling;
+            if (errorEl && errorEl.classList.contains('invalid-feedback')) {
+                errorEl.remove();
+            }
+        }
+    });
+});
+</script>
 {% endblock %}

@@ -2,18 +2,32 @@
 {% load static %}
 
 {% block content %}
-  <h3>Task 1: Lottery</h3>
+<div class="container bg-white p-4 rounded shadow-sm mt-4">
+  {% if language == 'it' %}
+    <h3 class="text-center text-primary fw-semibold mb-4">Compito 1: Lotteria</h3>
+  {% else %}
+    <h3 class="text-center text-primary fw-semibold mb-4">Task 1: Lottery</h3>
+  {% endif %}
 <hr>
   <div class="row">
     <!-- Lottery A -->
-    <div class="col text-center">
-      <h4>Lottery A</h4>
+    <div class="col text-center border rounded p-4 mx-2 shadow-sm bg-light">
+      {% if language == 'it' %}
+        <h4>Lotteria A</h4>
+      {% else %}
+        <h4>Lottery A</h4>
+      {% endif %}
 
       <!-- static wheel A -->
       <canvas id="wheelA" width="200" height="200" class="mb-3"></canvas>
 
-      <p class="fs-5">50% chance to win 20 tokens</p>
-      <p class="fs-5">50% chance to lose 10 tokens</p>
+      {% if language == 'it' %}
+        <p class="fs-5">50% di probabilità di vincere 200€</p>
+        <p class="fs-5">50% di probabilità di perdere 200€</p>
+      {% else %}
+        <p class="fs-5">50% chance to win €200</p>
+        <p class="fs-5">50% chance to lose €200</p>
+      {% endif %}
 
       <button
         type="submit"
@@ -21,19 +35,28 @@
         value="A"
         class="btn btn-primary btn-lg"
       >
-        Choose A
+        {% if language == 'it' %}Scegli A{% else %}Choose A{% endif %}
       </button>
     </div>
 
     <!-- Lottery B -->
-    <div class="col text-center">
-      <h4>Lottery B</h4>
+    <div class="col text-center border rounded p-4 mx-2 shadow-sm bg-light">
+      {% if language == 'it' %}
+        <h4>Lotteria B</h4>
+      {% else %}
+        <h4>Lottery B</h4>
+      {% endif %}
 
       <!-- static wheel B -->
       <canvas id="wheelB" width="200" height="200" class="mb-3"></canvas>
 
-      <p class="fs-5">25% chance to win 80 tokens</p>
-      <p class="fs-5">75% chance to lose 20 tokens</p>
+      {% if language == 'it' %}
+        <p class="fs-5">50% di probabilità di vincere 500€</p>
+        <p class="fs-5">50% di probabilità di perdere 500€</p>
+      {% else %}
+        <p class="fs-5">50% chance to win €500</p>
+        <p class="fs-5">50% chance to lose €500</p>
+      {% endif %}
 
       <button
         type="submit"
@@ -41,10 +64,11 @@
         value="B"
         class="btn btn-primary btn-lg"
       >
-        Choose B
+        {% if language == 'it' %}Scegli B{% else %}Choose B{% endif %}
       </button>
     </div>
   </div>
+</div>
 {% endblock %}
 
 {% block scripts %}

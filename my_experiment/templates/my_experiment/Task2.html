@@ -1,69 +1,100 @@
 {% extends "global/Page.html" %}
 {% block content %}
-  <h3>Intertemporal Choice</h3>
-    <hr>
-  <p class="fs-5">You have {{ budget }} tokens. Allocate between today and 3 weeks from now.</p>
+    <div class="container py-4 px-3 bg-white border rounded shadow-sm">
+        {% if language == 'it' %}
+            <h3 class="text-center text-primary fw-semibold mb-4">Scelta Intertemporale</h3>
+            <p class="fs-5 fw-semibold text-primary">Hai un budget di €1.000. Distribuiscilo tra immediatamente e tra 3 settimane.</p>
+        {% else %}
+            <h3 class="text-center text-primary fw-semibold mb-4">Intertemporal Choice</h3>
+            <p class="fs-5 fw-semibold text-primary">You have a budget of €1,000. Allocate this amount between right now and 3 weeks from now.</p>
+        {% endif %}
+        <hr>
 
-  {% for rate, fmt in rate_pairs %}
-    <hr>
-    <p class="fs-5">
-      <strong>Decision {{ forloop.counter }}</strong>
-      (Rate: {{ fmt }}×)
-    </p>
+        {% for rate, fmt in rate_pairs %}
+            <hr>
+            <div class="mb-4 p-3 bg-light border rounded">
+                <p class="fs-5 text-center">
+                    <strong>
+                        {% if language == 'it' %}
+                            Decisione {{ forloop.counter }}
+                            (Tasso: {{ fmt }}×)
+                        {% else %}
+                            Decision {{ forloop.counter }}
+                            (Rate: {{ fmt }}×)
+                        {% endif %}
+                    </strong>
+                </p>
 
-    <label class="fs-5" for="alloc_early{{ forloop.counter }}">Today:</label>
-    <input
-      id="alloc_early{{ forloop.counter }}"
-      type="number"
-      name="alloc_early{{ forloop.counter }}"
-      step="0.01"
-      required
-    >
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="form-group border border-primary rounded p-3 bg-light shadow-sm text-center">
+                            <label class="fs-5 mb-2" for="alloc_early{{ forloop.counter }}">
+                                {% if language == 'it' %}Immediatamente:{% else %}Right Now:{% endif %}
+                            </label>
+                            <input
+                                id="alloc_early{{ forloop.counter }}"
+                                type="number"
+                                name="alloc_early{{ forloop.counter }}"
+                                class="form-control form-control-lg"
+                                step="0.01"
+                                min="0"
+                                max="1000"
+                                required
+                            >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group border border-primary rounded p-3 bg-light shadow-sm text-center">
+                            <label class="fs-5 mb-2" for="alloc_late{{ forloop.counter }}">
+                                {% if language == 'it' %}Tra 3 settimane:{% else %}3 Weeks:{% endif %}
+                            </label>
+                            <input
+                                id="alloc_late{{ forloop.counter }}"
+                                type="number"
+                                name="alloc_late{{ forloop.counter }}"
+                                class="form-control form-control-lg"
+                                step="0.01"
+                                min="0"
+                                max="1000"
+                                required
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
 
-    <label class="fs-5" for="alloc_late{{ forloop.counter }}">3 Weeks:</label>
-    <input
-      id="alloc_late{{ forloop.counter }}"
-      type="number"
-      name="alloc_late{{ forloop.counter }}"
-      step="0.01"
-      required
-    >
-  {% endfor %}
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary btn-lg mt-4 shadow otree-btn-next">
+                {% if language == 'it' %}Avanti{% else %}Next{% endif %}
+            </button>
+        </div>
 
-  <div class="d-flex justify-content-end">
-  <button
-    type="submit"
-    class="btn btn-primary btn-lg otree-btn-next"
-  >
-    Next
-  </button>
-</div>
+        <script>
+            const budget = 1000.0;
 
-  <!-- Autofill script -->
-  <script>
-      const budget = 100;
+            document.addEventListener('DOMContentLoaded', () => {
+                for (let i = 1; i <= 5; i++) {
+                    const early = document.querySelector(`input[name="alloc_early${i}"]`);
+                    const late = document.querySelector(`input[name="alloc_late${i}"]`);
 
-      function setupAutoFill(pairIndex) {
-          const earlyInput = document.querySelector(`input[name="alloc_early${pairIndex}"]`);
-          const lateInput = document.querySelector(`input[name="alloc_late${pairIndex}"]`);
+                    if (early && late) {
+                        early.addEventListener('input', () => {
+                            let eVal = parseFloat(early.value);
+                            if (!isNaN(eVal) && eVal >= 0 && eVal <= budget) {
+                                late.value = (budget - eVal).toFixed(2);
+                            }
+                        });
 
-          if (earlyInput && lateInput) {
-              earlyInput.addEventListener('input', () => {
-                  const value = parseFloat(earlyInput.value) || 0;
-                  lateInput.value = Math.max(0, budget - value).toFixed(2);
-              });
-
-              lateInput.addEventListener('input', () => {
-                  const value = parseFloat(lateInput.value) || 0;
-                  earlyInput.value = Math.max(0, budget - value).toFixed(2);
-              });
-          }
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-          for (let i = 1; i <= 5; i++) {
-              setupAutoFill(i);
-          }
-      });
-  </script>
+                        late.addEventListener('input', () => {
+                            let lVal = parseFloat(late.value);
+                            if (!isNaN(lVal) && lVal >= 0 && lVal <= budget) {
+                                early.value = (budget - lVal).toFixed(2);
+                            }
+                        });
+                    }
+                }
+            });
+        </script>
+    </div>
 {% endblock %}

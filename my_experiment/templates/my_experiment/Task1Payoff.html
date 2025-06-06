@@ -1,36 +1,55 @@
 {% extends "global/Page.html" %}
 {% block content %}
-  <h3>Task 1 Results</h3>
+  <h3>{% if language == 'en' %}Task 1 Results{% else %}Risultati del Compito 1{% endif %}</h3>
   <hr>
   <div style="display:flex;gap:40px;justify-content:center;align-items:flex-start;">
     <div style="text-align:center;">
-      <div><strong>Chosen Lottery</strong></div>
+      <div><strong>{% if language == 'en' %}Chosen Lottery{% else %}Lotteria Scelta{% endif %}</strong></div>
       <canvas id="chosenWheelStatic" width="300" height="300"></canvas>
     </div>
     {% if is_treatment %}
     <div style="text-align:center;">
-      <div><strong>Unchosen Lottery</strong></div>
+      <div><strong>{% if language == 'en' %}Unchosen Lottery{% else %}Lotteria Non Scelta{% endif %}</strong></div>
       <canvas id="unchosenWheelStatic" width="300" height="300"></canvas>
     </div>
     {% endif %}
   </div>
 
-  <p class="fs-5">Your initial endowment was <strong>{{ initial }}</strong> tokens.</p>
-  <p class="fs-5">After Task 1, you are left with <strong>{{ final_str }}</strong> tokens.</p>
+  <!--<p class="fs-5">Your initial endowment was <strong>{initial}}</strong> tokens.</p> -->
   {% if is_treatment %}
-  <p class="fs-5 text-danger">
-    Had you chosen the other lottery, you would have been left with
-    <u><strong>{{ unchosen_total_str }}</strong></u> tokens. <!-- todo: also tell them how much it is compared to the chosen outcome -->
+  <p class="fs-5 align-content-center">
+    {% if language == 'en' %}
+      After your decisions in Task 1, you {% if won %}won{% else %}lost{% endif %} <strong>{{ gained_str }}</strong> Euros.
+    {% else %}
+      Dopo le tue decisioni nel Compito 1, hai {% if won %}vinto{% else %}perso{% endif %} <strong>{{ gained_str }}</strong> Euro.
+    {% endif %}
+  </p>
+  {% else %}
+  <p class="fs-5 align-content-center">
+    {% if language == 'en' %}
+      After completing Task 1, you {% if won %}won{% else %}lost{% endif %} <strong>{{ gained_str }}</strong> Euros.
+    {% else %}
+      Dopo aver completato il Compito 1, hai {% if won %}vinto{% else %}perso{% endif %} <strong>{{ gained_str }}</strong> Euro.
+    {% endif %}
+  </p>
+  {% endif %}
+  {% if is_treatment %}
+  <p class="fs-5 alert alert-primary align-content-center">
+    {% if language == 'en' %}
+      Had you chosen the other lottery, you would have {% if unchosen_won %}won{% else %}lost{% endif %} <strong>{{ unchosen_str }}</strong> Euros.
+    {% else %}
+      Se avessi scelto l'altra lotteria, avresti {% if unchosen_won %}vinto{% else %}perso{% endif %} <strong>{{ unchosen_str }}</strong> Euro.
+    {% endif %}
   </p>
   {% endif %}
   <div class="d-flex justify-content-end">
-  <button
-    type="submit"
-    class="btn btn-primary btn-lg otree-btn-next"
-  >
-    Next
-  </button>
-</div>
+    <button
+      type="submit"
+      class="btn btn-primary btn-lg otree-btn-next"
+    >
+      {% if language == 'en' %}Next{% else %}Avanti{% endif %}
+    </button>
+  </div>
 {% endblock %}
 
 {% block scripts %}

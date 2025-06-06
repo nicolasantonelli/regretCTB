@@ -8,12 +8,12 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None  # Individual task
     NUM_ROUNDS = 1
     # CTB Constants
-    BUDGET = cu(100)
-    INTEREST_RATES = [1, 1.05, 1.1, 1.15, 1.2]
+    BUDGET = cu(1000)
+    INTEREST_RATES = [1, 1.1, 1.2, 1.3, 1.4]
     # Regret Task Constants
-    INITIAL_ENDOWMENT = cu(20)
-    LOTTERY_A = {"outcomes": [cu(20), cu(-10)], "probabilities": [0.5, 0.5]}
-    LOTTERY_B = {"outcomes": [cu(80), cu(-20)], "probabilities": [0.25, 0.75]}
+    ##INITIAL_ENDOWMENT = cu(20)
+    LOTTERY_A = {"outcomes": [cu(200), cu(-200)], "probabilities": [0.5, 0.5]}
+    LOTTERY_B = {"outcomes": [cu(500), cu(-500)], "probabilities": [0.5, 0.5]}
 
 
 class Subsession(BaseSubsession):
@@ -22,10 +22,10 @@ class Subsession(BaseSubsession):
         for p in self.get_players():
             # Randomly pick 'treatment' or 'control'
             p.treatment_group = random.choice(['treatment', 'control'])
-        if self.round_number == 1:
-            prolific = self.session.config.get("prolific-link", 60)  # default to 60 if not set
+        #if self.round_number == 1:
+            #prolific = self.session.config.get("prolific-link", 60)  # default to 60 if not set
             # You can store `time` on the session or pass it to players
-            self.session.vars["prolific-link"] = prolific  # optional storage
+           # self.session.vars["prolific-link"] = prolific  # optional storage
 
 
 class Group(BaseGroup):
@@ -40,6 +40,7 @@ class Player(BasePlayer):
         initial=None,
         doc="What the unchosen lottery would have paid out"
     )
+    regret_rejoice = models.StringField()
 
     confirm_age = models.BooleanField(
         label="I am at least 18 years old and consent to participate",
@@ -60,7 +61,6 @@ class Player(BasePlayer):
     arrow_angle = models.FloatField(initial=0)
     arrow_speed = models.FloatField(initial=0)
     stopped_angle = models.FloatField()
-    outcome = models.CurrencyField()
 
     # CTB Task Fields
     alloc_early1 = models.CurrencyField()
@@ -95,4 +95,31 @@ class Player(BasePlayer):
     prolific_id = models.StringField(
         label="Please insert your Prolific ID:",
         blank=False,  # forces them to type something
+    )
+
+    selected_language = models.StringField(
+        choices=['en', 'it'],
+        blank=False,
+        doc="Participant's chosen language"
+    )
+
+    # Demographic fields
+    age = models.IntegerField(label="Age")
+
+    gender = models.StringField(
+        choices=["male", "female", "prefer_not"],
+        label="Gender"
+    )
+
+    education = models.StringField(
+        choices=[
+            "none", "primary", "middle", "highschool",
+            "bachelors", "masters", "phd"
+        ],
+        label="Highest level of education completed"
+    )
+
+    employment = models.StringField(
+        choices=["student", "workingstudent", "unemployed", "employed"],
+        label="Employment status"
     )

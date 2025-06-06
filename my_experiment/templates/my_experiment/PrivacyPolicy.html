@@ -1,194 +1,232 @@
 {% extends "global/Page.html" %}
 {% block content %}
-  <h3>Privacy Policy & Data Treatment</h3>
-<hr>
-  <div class="mb-4">
+<div class="container mt-4">
+  <h3 class="mb-4  text-primary text-center">
+    {% if player.selected_language == 'it' %}
+      Modulo di Consenso Informato
+    {% else %}
+      Privacy Policy & Data Treatment
+    {% endif %}
+  </h3>
+  <div class="card mb-4">
+    <div class="card-body fs-5">
+      {% if player.selected_language == 'it' %}
+        <p><strong>Titolo dello studio:</strong> Decisioni in Scenari Intertemporali</p>
+        <p><strong>Studente:</strong> Nicolas Antonelli (<a href="mailto:nicolas.antonelli@studenti.unitn.it">nicolas.antonelli@studenti.unitn.it</a>)</p>
+        <p><strong>Relatori:</strong> Austėja Kažemekaitytė (<a href="mailto:a.kazemekaityte@unitn.it">a.kazemekaityte@unitn.it</a>) e Matteo Ploner (<a href="mailto:matteo.ploner@unitn.it">matteo.ploner@unitn.it</a>)</p>
+        <p><strong>Scopo:</strong> Questo studio esplora come gli individui prendono delle decisioni in un contesto intertemporale.</p>
+        <hr>
+        <h4>Cosa raccogliamo</h4>
+        <ul>
+          <li><strong>Le tue risposte</strong> a una serie di domande decisionali.
+            <ul>
+              <li>Queste risposte saranno completamente anonimizzate immediatamente dopo la tua partecipazione, in modo che non possano essere ricondotte a te.</li>
+            </ul>
+          </li>
+        </ul>
+        <h4>I tuoi diritti</h4>
+        <ul>
+          <li>La partecipazione è volontaria.</li>
+          <li>Puoi ritirarti in qualsiasi momento senza penalità chiudendo il software.</li>
+          <li>Una volta che lo studio è terminato e i tuoi dati sono stati anonimizzati, non sarà più possibile ritirare o richiedere la cancellazione di tali dati.</li>
+        </ul>
+        <h4>Riservatezza & Gestione dei dati</h4>
+        <ul>
+          <li>I dati anonimizzati sono archiviati in modo sicuro su server conformi al GDPR presso l'Università di Trento.</li>
+        </ul>
+        <h4>Requisiti dei partecipanti</h4>
+        <p>Aperto a persone di età pari o superiore a 18 anni.</p>
+        <h4>Rischi</h4>
+        <p>Nessun rischio prevedibile oltre a quelli associati alle normali attività online.</p>
+        <h4>Benefici</h4>
+        <p>Nessun beneficio personale diretto, ma i risultati possono contribuire alla comprensione scientifica dei processi decisionali.</p>
+        <hr>
+        <h3 id="privacy-notice"><strong>Informativa sulla Privacy</strong></h3>
+        <p><strong>Titolo dello studio:</strong> Decisioni in Scenari Intertemporali</p>
+        <h4>1. Titolare del trattamento</h4>
+        <p>L’Università di Trento (via Calepina 14, 38122 Trento; <a href="mailto:ateneo@unitn.it">ateneo@unitn.it</a>) è il titolare del trattamento dei dati. Il responsabile scientifico dello studio è Nicolas Antonelli.</p>
+        <h4>2. Responsabile della protezione dei dati (DPO)</h4>
+        <p>Contatto: <a href="mailto:rpd@unitn.it">rpd@unitn.it</a></p>
+        <h4>3. Finalità e base giuridica</h4>
+          </li>
+          <li><strong>Dati dello studio (scelte/dati demografici):</strong>
+            <ul>
+              <li>Finalità: Ricerca scientifica.</li>
+              <li>I dati saranno anonimizzati irreversibilmente al termine della tua partecipazione e quindi non saranno più considerati “dati personali” ai sensi del GDPR.</li>
+              <li>Base giuridica: Art. 6(1)(e) GDPR (compito di interesse pubblico).</li>
+            </ul>
+          </li>
+        </ul>
+        <blockquote>Non vengono raccolte categorie particolari di dati (es. dati sanitari, biometrici).</blockquote>
+        <h4>4. Raccolta dati & strumenti</h4>
+        <ul>
+          <li><strong>Fonte:</strong> Raccolti direttamente da te tramite:
+            <ul>
+              <li>Piattaforma oTree—risposte anonimizzate (scelte/demografia).</li>
+            </ul>
+          </li>
+        </ul>
+        <h4>5. Sicurezza & anonimizzazione</h4>
+        <ul>
+          <li>I dati rimanenti sono anonimizzati e conservati a tempo indeterminato.</li>
+        </ul>
+        <h4>6. Condivisione & trasferimento</h4>
+        <ul>
+          <li>Nessun accesso a terzi (eccetto risultati anonimizzati nelle pubblicazioni).</li>
+          <li>Nessun trasferimento internazionale di dati personali—solo dopo anonimizzazione.</li>
+          <li>CEEL (DEM) agisce come responsabile tecnico della piattaforma.</li>
+        </ul>
+        <h4>7. I tuoi diritti</h4>
+        <ul>
+          <li>Una volta anonimizzati, i dati non sono più “dati personali” ai sensi del GDPR.</li>
+          <li>Non potrai esercitare diritti di accesso, rettifica, cancellazione o altri diritti GDPR sui dati anonimizzati.</li>
+          <li>Puoi contattare il Garante per la protezione dei dati personali se necessario.</li>
+        </ul>
+        <h4>8. Pubblicazione</h4>
+        <p>I risultati saranno pubblicati in forma anonima/aggregata.</p>
+        <p><strong>Contatto:</strong> Per domande, scrivere al responsabile scientifico all’indirizzo sopra indicato.</p>
+      {% else %}
+        <p><strong>Study Title:</strong> Decisions in Intertemporal Scenarios</p>
+        <p><strong>Student:</strong> Nicolas Antonelli (<a href="mailto:nicolas.antonelli@studenti.unitn.it">nicolas.antonelli@studenti.unitn.it</a>)</p>
+        <p><strong>Supervisors:</strong> Austėja Kažemekaitytė (<a href="mailto:a.kazemekaityte@unitn.it">a.kazemekaityte@unitn.it</a>) and Matteo Ploner (<a href="mailto:matteo.ploner@unitn.it">matteo.ploner@unitn.it</a>)</p>
+        <p><strong>Purpose:</strong> This study explores how individuals make decisions within an intertemporal context.</p>
+        <hr>
+        <h4>What We Collect</h4>
+          <li><strong>Your responses</strong> to a series of decision-making questions.
+            <ul>
+              <li>These responses will be fully anonymized immediately after your participation so that they cannot be linked back to you.</li>
+            </ul>
+          </li>
+        </ul>
+        <h4>Your Rights</h4>
+        <ul>
+          <li>Participation is voluntary.</li>
+          <li>You may withdraw at any time without penalty by closing the software.</li>
+          <li>Once the study is finished and your data have been anonymized, you will no longer be able to withdraw or request deletion of those data.</li>
+        </ul>
+        <h4>Confidentiality & Data Handling</h4>
+        <ul>
+          <li>Anonymized data are securely stored on GDPR-compliant servers at the University of Trento.</li>
+        </ul>
+        <h4>Participant Requirements</h4>
+        <p>Open to individuals aged 18 and over.</p>
+        <h4>Risks</h4>
+        <p>No foreseeable risks beyond those associated with normal online activities.</p>
+        <h4>Benefits</h4>
+        <p>No direct personal benefit, but results may advance the scientific understanding of decision-making processes.</p>
+        <hr>
+        <h3 id="privacy-notice"><strong>Privacy Notice</strong></h3>
+        <p><strong>Study Title:</strong> Decisions in Intertemporal Scenarios</p>
+        <h4>1. Data Controller</h4>
+        <p>The University of Trento (via Calepina 14, 38122 Trento; <a href="mailto:ateneo@unitn.it">ateneo@unitn.it</a>) is the data controller. The principal investigator of this study is Nicolas Antonelli.</p>
+        <h4>2. Data Protection Officer (DPO)</h4>
+        <p>Contact: <a href="mailto:rpd@unitn.it">rpd@unitn.it</a></p>
+        <h4>3. Purpose & Legal Basis</h4>
+        <ul>
+          <li><strong>Study data (choices/demographics):</strong>
+            <ul>
+              <li>Purpose: Scientific research.</li>
+              <li>Data will be irreversibly anonymized at the end of your participation and thus will no longer qualify as “personal data” under the GDPR.</li>
+              <li>Legal basis: Art. 6(1)(e) GDPR (task in public interest).</li>
+            </ul>
+          </li>
+        </ul>
+        <blockquote>No special categories of data (e.g., health, biometric data) are collected.</blockquote>
+        <h4>4. Data Collection & Tools</h4>
+        <ul>
+          <li><strong>Source:</strong> Collected directly from you via:
+            <ul>
+              <li>oTree platform—responses anonymized (choices/demographics).</li>
+            </ul>
+          </li>
+        </ul>
+        <h4>5. Data Security & Anonymization</h4>
+        <ul>
+          <li>Remaining data anonymized and stored indefinitely.</li>
+        </ul>
+        <h4>6. Data Sharing & Transfer</h4>
+        <ul>
+          <li>No third-party access (except anonymized results in publications).</li>
+          <li>No international transfer of personal data—only after anonymization.</li>
+          <li>CEEL (DEM) acts as data processor for the technical platform.</li>
+        </ul>
+        <h4>7. Your Rights</h4>
+        <ul>
+          <li>Once your data is anonymized, it is no longer “personal data” under GDPR.</li>
+          <li>You cannot exercise access, rectification, erasure, or other GDPR rights on anonymized data.</li>
+          <li>You may contact the Italian Data Protection Authority if needed.</li>
+        </ul>
+        <h4>8. Publication</h4>
+        <p>Results will be published in anonymous/aggregate form.</p>
+        <p><strong>Contact:</strong> For questions, email the principal investigator at nicolas.antonelli@studenti.unitn.it</p>
+      {% endif %}
+    </div>
+  </div>
 
-  <h3><strong>Informed Consent Form</strong></h3>
-
-  <p class="fs-5"><strong>Study Title:</strong> Decisions in Intertemporal Scenarios</p>
-  <p class="fs-5"><strong>Researcher:</strong> Nicolas Antonelli email: nicolas.antonelli@studenti.unitn.it </p>
-
-  <p class="fs-5"><strong>Purpose:</strong> This study explores how individuals make decisions within an intertemporal context.</p>
   <hr>
+  <p class="fs-5"><strong>
+    {% if player.selected_language == 'it' %}
+      Per continuare, conferma tutte le caselle:
+    {% else %}
+      By proceeding, you confirm (check all to continue):
+    {% endif %}
+  </strong></p>
 
-  <h4>What We Collect</h4>
-  <ul class="fs-5">
-    <li><strong>Your ID</strong> (only temporarily, to process payment).</li>
-    <ul>
-      <li>This ID will be stored separately from your response data and deleted once payment is complete.</li>
-    </ul>
-    <li><strong>Your responses</strong> to a series of decision-making questions.</li>
-    <ul>
-      <li>These responses will be fully anonymized immediately after your participation so that they cannot be linked back to you.</li>
-    </ul>
-  </ul>
+  <div class="form-check mb-2">
+    <input class="form-check-input confirm-checkbox" type="checkbox" id="id_confirm_age" name="confirm_age" required>
+    <label class="fs-5 form-check-label" for="id_confirm_age">
+      {% if player.selected_language == 'it' %}
+        Ho almeno 18 anni e acconsento a partecipare
+      {% else %}
+        I am at least 18 years old and consent to participate
+      {% endif %}
+    </label>
+  </div>
 
-  <h4>Your Rights</h4>
-  <ul class="fs-5">
-    <li>Participation is voluntary.</li>
-    <li>You may withdraw at any time without penalty by closing the software.</li>
-    <li>Once the study is finished and your data have been anonymized, you will no longer be able to withdraw or request deletion of those data.</li>
-  </ul>
+  <div class="form-check mb-2">
+    <input class="form-check-input confirm-checkbox" type="checkbox" id="id_confirm_withdraw" name="confirm_withdraw" required>
+    <label class="fs-5 form-check-label" for="id_confirm_withdraw">
+      {% if player.selected_language == 'it' %}
+        Capisco di potermi ritirare in qualsiasi momento senza penalità (chiudendo il software)
+      {% else %}
+        I understand I can withdraw without penalty (by closing the software)
+      {% endif %}
+    </label>
+  </div>
 
-  <h4>Confidentiality & Data Handling</h4>
-  <ul class="fs-5">
-    <li>Anonymized data are securely stored on GDPR-compliant servers at the University of Trento.</li>
-    <li>The ID used for payment will be retained only as long as necessary to complete the transaction and then deleted.</li>
-  </ul>
+  <div class="form-check mb-4">
+    <input class="form-check-input confirm-checkbox" type="checkbox" id="id_confirm_privacy" name="confirm_privacy" required>
+    <label class="fs-5 form-check-label" for="id_confirm_privacy">
+      {% if player.selected_language == 'it' %}
+        Ho letto l'Informativa sulla Privacy
+      {% else %}
+        I have read the Privacy Notice
+      {% endif %}
+    </label>
+  </div>
 
-  <h4>Ethics Approval</h4>
-  <p class="fs-5">The protocol has been approved by the International Review Board of DEM.</p>
-
-  <h4>Participant Requirements</h4>
-  <p class="fs-5">Open to individuals aged 18 and over.</p>
-
-  <h4>Risks</h4>
-  <p class="fs-5">No foreseeable risks beyond those associated with normal online activities.</p>
-
-  <h4>Benefits</h4>
-  <p class="fs-5">No direct personal benefit, but results may advance the scientific understanding of decision-making processes.</p>
-
-  <h4>Compensation</h4>
-  <p class="fs-5">As specified in the experiment’s rules.</p>
-
-  <h3 id="privacy-notice"><strong>Privacy Notice</strong></h3>
-<hr>
-  <p class="fs-5"><strong>Study Title:</strong> Decisions in Social Scenarios</p>
-
-  <h4>1. Data Controller</h4>
-  <p class="fs-5">The University of Trento (via Calepina 14, 38122 Trento; <a href="mailto:ateneo@unitn.it">ateneo@unitn.it</a>) is the data controller. The principal investigator of this study is Nicolas Antonelli.</p>
-
-  <h4>2. Data Protection Officer (DPO)</h4>
-  <p class="fs-5">Contact: <a href="mailto:rpd@unitn.it">rpd@unitn.it</a></p>
-
-  <h4>3. Purpose & Legal Basis</h4>
-  <ul class="fs-5">
-    <li><strong>ID (payment only):</strong>
-      <ul>
-        <li>Legal basis: Art. 6(1)(b) GDPR (necessary for performing the participation/payment contract).</li>
-        <li>Treated separately from study data and deleted immediately after payment processing.</li>
-      </ul>
-    </li>
-    <li><strong>Study data (choices/demographics):</strong>
-      <ul>
-        <li>Purpose: Scientific research.</li>
-        <li>Data will be irreversibly anonymized at the end of your participation and thus will no longer qualify as “personal data” under the GDPR.</li>
-        <li>Legal basis: Art. 6(1)(e) GDPR (task in public interest).</li>
-      </ul>
-    </li>
-  </ul>
-
-  <blockquote>No special categories of data (e.g., health, biometric data) are collected.</blockquote>
-
-  <h4>4. Data Collection & Tools</h4>
-  <ul class="fs-5">
-    <li><strong>Source:</strong> Collected directly from you via:
-      <ul>
-        <li>Your ID (for payment)—deleted immediately after the experiment.</li>
-        <li>oTree platform—responses anonymized (choices/demographics).</li>
-      </ul>
-    </li>
-  </ul>
-
-  <h4>5. Data Security & Anonymization</h4>
-  <ul class="fs-5">
-    <li>ID stored only as long as needed to record payment, then deleted.</li>
-    <li>Remaining data anonymized and stored indefinitely.</li>
-  </ul>
-
-  <h4>6. Data Sharing & Transfer</h4>
-  <ul class="fs-5">
-    <li>No third-party access (except anonymized results in publications).</li>
-    <li>No international transfer of personal data—only after anonymization.</li>
-    <li>CEEL (DEM) acts as data processor for the technical platform.</li>
-  </ul>
-
-  <h4>7. Your Rights</h4>
-  <ul class="fs-5">
-    <li>Once your data is anonymized, it is no longer “personal data” under GDPR.</li>
-    <li>You cannot exercise access, rectification, erasure, or other GDPR rights on anonymized data.</li>
-    <li>You may contact the Italian Data Protection Authority if needed.</li>
-  </ul>
-
-  <h4>8. Publication</h4>
-  <p class="fs-5">Results will be published in anonymous/aggregate form.</p>
-
-  <p class="fs-5"><strong>Contact:</strong> For questions, email the principal investigator at [email address]</p>
-
-</div>
-<hr>
-
-   <p class="fs-5"><strong>By proceeding, you confirm (check all to continue):</strong></p>
-
-<div class="form-check mb-2">
-  <input
-    class="form-check-input confirm-checkbox"
-    type="checkbox"
-    id="id_confirm_age"
-    name="confirm_age"
-    required
-  >
-  <label class="fs-5 form-check-label" for="id_confirm_age">
-    I am at least 18 years old and consent to participate
-  </label>
-</div>
-<div class="form-check mb-2">
-  <input
-    class="form-check-input confirm-checkbox"
-    type="checkbox"
-    id="id_confirm_withdraw"
-    name="confirm_withdraw"
-    required
-  >
-  <label class="fs-5 form-check-label" for="id_confirm_withdraw">
-    I understand I can withdraw without penalty (by closing the software)
-  </label>
-</div>
-<div class="form-check mb-4">
-  <input
-    class="form-check-input confirm-checkbox"
-    type="checkbox"
-    id="id_confirm_privacy"
-    name="confirm_privacy"
-    required
-  >
-  <label class="fs-5 form-check-label" for="id_confirm_privacy">
-    I have read the Privacy Notice
-  </label>
-</div>
-<hr>
-<!-- Next button pinned bottom-right, disabled until JS enables it -->
-<div class="next-button-container">
-  <button
-    type="submit"
-    id="nextBtn"
-    class="btn btn-primary btn-lg otree-btn-next"
-    disabled
-  >
-    Next
-  </button>
+  <hr>
+  <div class="next-button-container d-flex justify-content-end">
+    <button type="submit" id="nextBtn" class="btn btn-primary btn-lg otree-btn-next" disabled>
+      {% if player.selected_language == 'it' %}
+        Avanti
+      {% else %}
+        Next
+      {% endif %}
+    </button>
+  </div>
 </div>
 
 {% block scripts %}
 <script>
-  // When any checkbox changes, enable Next only if all are checked
   const checkboxes = document.querySelectorAll('.confirm-checkbox');
   const nextBtn    = document.getElementById('nextBtn');
-
   function updateNext() {
-    // Array.every returns true only if all checkboxes are checked
     const allChecked = Array.from(checkboxes).every(ch => ch.checked);
     nextBtn.disabled = !allChecked;
   }
-
-  // Attach listener to each checkbox
   checkboxes.forEach(ch => ch.addEventListener('change', updateNext));
-
-  // Initialize on page load (in case browser autochecks something)
   updateNext();
 </script>
 {% endblock %}
-
-
 {% endblock %}
