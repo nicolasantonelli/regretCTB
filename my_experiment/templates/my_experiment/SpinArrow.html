@@ -13,19 +13,26 @@
   {% else %}
     <p class="fs-5">Click "Start" to spin the arrow and "Stop" to stop it.</p>
   {% endif %}
-
+<style>
+  .wheel-canvas {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+</style>
   <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start; margin-bottom: 20px;">
     <!-- Chosen always shows -->
     <div style="text-align: center;">
       <div><strong>{% if player.selected_language == 'it' %}Lotteria scelta{% else %}Chosen Lottery{% endif %}</strong></div>
-      <canvas id="chosenWheel" width="300" height="300"></canvas>
+      <canvas id="chosenWheel" class="wheel-canvas"></canvas>
     </div>
 
     <!-- Only render this block for the treatment group -->
     {% if treatment == 'treatment' %}
       <div style="text-align: center;">
         <div><strong>{% if player.selected_language == 'it' %}Lotteria non scelta{% else %}Unchosen Lottery{% endif %}</strong></div>
-        <canvas id="unchosenWheel" width="300" height="300"></canvas>
+        <canvas id="unchosenWheel" class="wheel-canvas"></canvas>
       </div>
     {% endif %}
   </div>
@@ -53,7 +60,7 @@
   const initialSpeed = {{ initial_speed }};
   const isTreatment = "{{ treatment }}" === "treatment";
 
-  // Canvas helpers (unchanged) …
+  // Canvas helpers
   const radius = 140, center = { x:150, y:150 };
   function drawWheel(ctx, probs) {
     let start = Math.PI/2, colors = ['#2bc31f','#d70000'];
@@ -68,7 +75,6 @@
     });
   }
   function drawArrow(ctx, angle, visible) {
-    /* your existing arrow code */
     const overallArrowLength = radius * 1.5;
     const headLengthParam = 15;
     const halfLen = overallArrowLength / 2;
@@ -98,11 +104,20 @@
     ctx.restore();
   }
 
-  // Grab contexts
-  const ctxChosen = document.getElementById('chosenWheel').getContext('2d');
-  const ctxUnchosen = isTreatment
-    ? document.getElementById('unchosenWheel').getContext('2d')
-    : null;
+  // Grab and set canvas dimensions
+  const canvasChosen = document.getElementById('chosenWheel');
+  canvasChosen.width = 300;
+  canvasChosen.height = 300;
+  const ctxChosen = canvasChosen.getContext('2d');
+
+  // ✅ FIXED: conditionally initialize unchosen canvas
+  let ctxUnchosen = null;
+  if (isTreatment) {
+    const canvasUnchosen = document.getElementById('unchosenWheel');
+    canvasUnchosen.width = 300;
+    canvasUnchosen.height = 300;
+    ctxUnchosen = canvasUnchosen.getContext('2d');
+  }
 
   // Arrow state
   let angle = initialAngle * Math.PI/180,
@@ -120,39 +135,34 @@
   }
 
   function frame() {
-  if (!spinning) return;
-  angle += speed;
-  if (slowing) speed *= 0.97;
+    if (!spinning) return;
+    angle += speed;
+    if (slowing) speed *= 0.97;
 
-  // redraw chosen
-  ctxChosen.clearRect(0, 0, 300, 300);
-  drawWheel(ctxChosen, chosenProbs);
-  drawArrow(ctxChosen, angle, true);
+    // redraw chosen
+    ctxChosen.clearRect(0, 0, 300, 300);
+    drawWheel(ctxChosen, chosenProbs);
+    drawArrow(ctxChosen, angle, true);
 
-  // redraw unchosen (treatment only)
-  if (ctxUnchosen) {
-    ctxUnchosen.clearRect(0, 0, 300, 300);
-    drawWheel(ctxUnchosen, unchosenProbs);
-    drawArrow(ctxUnchosen, angle, showUn);
+    // redraw unchosen
+    if (ctxUnchosen) {
+      ctxUnchosen.clearRect(0, 0, 300, 300);
+      drawWheel(ctxUnchosen, unchosenProbs);
+      drawArrow(ctxUnchosen, angle, showUn);
+    }
+
+    if (slowing && speed < 0.001) {
+      spinning = false;
+      document.getElementById('stopped_angle').value = (angle * 180/Math.PI) % 360;
+      showUn = true;
+      setTimeout(() => {
+        document.querySelector('form').submit();
+      }, 1000);
+      return;
+    }
+
+    requestAnimationFrame(frame);
   }
-
-  if (slowing && speed < 0.001) {
-    spinning = false;
-    // record final angle
-    document.getElementById('stopped_angle').value = (angle * 180/Math.PI) % 360;
-    // reveal unchosen arrow immediately
-    showUn = true;
-    // after 1s, auto-submit the form
-    setTimeout(() => {
-      document.querySelector('form').submit();
-    }, 1000);
-    return;    // <-- exit so we don't queue another frame
-  }
-
-  // Only queue the next animation frame—no auto-submit here
-  requestAnimationFrame(frame);
-}
-
 
   // Start spin
   document.getElementById('startBtn').onclick = () => {
@@ -166,7 +176,7 @@
   // Stop spin
   document.getElementById('stopBtn').onclick = () => {
     slowing = true;
-    if (isTreatment) showUn = true;  // unchosen arrow appears immediately
+    if (isTreatment) showUn = true;
   };
 })();
 </script>

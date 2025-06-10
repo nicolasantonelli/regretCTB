@@ -1,52 +1,60 @@
 {% extends "global/Page.html" %}
+
 {% block content %}
   <h3>{% if language == 'en' %}Task 1 Results{% else %}Risultati del Compito 1{% endif %}</h3>
   <hr>
-  <div style="display:flex;gap:40px;justify-content:center;align-items:flex-start;">
-    <div style="text-align:center;">
+  <style>
+    .wheel-canvas {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      aspect-ratio: 1 / 1;
+    }
+  </style>
+
+  <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start;">
+    <div style="text-align: center;">
       <div><strong>{% if language == 'en' %}Chosen Lottery{% else %}Lotteria Scelta{% endif %}</strong></div>
-      <canvas id="chosenWheelStatic" width="300" height="300"></canvas>
+      <canvas id="chosenWheelStatic" class="wheel-canvas"></canvas>
     </div>
     {% if is_treatment %}
-    <div style="text-align:center;">
+    <div style="text-align: center;">
       <div><strong>{% if language == 'en' %}Unchosen Lottery{% else %}Lotteria Non Scelta{% endif %}</strong></div>
-      <canvas id="unchosenWheelStatic" width="300" height="300"></canvas>
+      <canvas id="unchosenWheelStatic" class="wheel-canvas"></canvas>
     </div>
     {% endif %}
   </div>
 
-  <!--<p class="fs-5">Your initial endowment was <strong>{initial}}</strong> tokens.</p> -->
   {% if is_treatment %}
-  <p class="fs-5 align-content-center">
-    {% if language == 'en' %}
-      After your decisions in Task 1, you {% if won %}won{% else %}lost{% endif %} <strong>{{ gained_str }}</strong> Euros.
-    {% else %}
-      Dopo le tue decisioni nel Compito 1, hai {% if won %}vinto{% else %}perso{% endif %} <strong>{{ gained_str }}</strong> Euro.
-    {% endif %}
-  </p>
+    <p class="fs-5 align-content-center">
+      {% if language == 'en' %}
+        After your decisions in Task 1, you {% if won %}won{% else %}lost{% endif %} <strong>{{ gained_str }}</strong> Euros.
+      {% else %}
+        Dopo le tue decisioni nel Compito 1, hai {% if won %}vinto{% else %}perso{% endif %} <strong>{{ gained_str }}</strong> Euro.
+      {% endif %}
+    </p>
   {% else %}
-  <p class="fs-5 align-content-center">
-    {% if language == 'en' %}
-      After completing Task 1, you {% if won %}won{% else %}lost{% endif %} <strong>{{ gained_str }}</strong> Euros.
-    {% else %}
-      Dopo aver completato il Compito 1, hai {% if won %}vinto{% else %}perso{% endif %} <strong>{{ gained_str }}</strong> Euro.
-    {% endif %}
-  </p>
+    <p class="fs-5 align-content-center">
+      {% if language == 'en' %}
+        After completing Task 1, you {% if won %}won{% else %}lost{% endif %} <strong>{{ gained_str }}</strong> Euros.
+      {% else %}
+        Dopo aver completato il Compito 1, hai {% if won %}vinto{% else %}perso{% endif %} <strong>{{ gained_str }}</strong> Euro.
+      {% endif %}
+    </p>
   {% endif %}
+
   {% if is_treatment %}
-  <p class="fs-5 alert alert-primary align-content-center">
-    {% if language == 'en' %}
-      Had you chosen the other lottery, you would have {% if unchosen_won %}won{% else %}lost{% endif %} <strong>{{ unchosen_str }}</strong> Euros.
-    {% else %}
-      Se avessi scelto l'altra lotteria, avresti {% if unchosen_won %}vinto{% else %}perso{% endif %} <strong>{{ unchosen_str }}</strong> Euro.
-    {% endif %}
-  </p>
+    <p class="fs-5 alert alert-primary align-content-center">
+      {% if language == 'en' %}
+        Had you chosen the other lottery, you would have {% if unchosen_won %}won{% else %}lost{% endif %} <strong>{{ unchosen_str }}</strong> Euros.
+      {% else %}
+        Se avessi scelto l'altra lotteria, avresti {% if unchosen_won %}vinto{% else %}perso{% endif %} <strong>{{ unchosen_str }}</strong> Euro.
+      {% endif %}
+    </p>
   {% endif %}
+
   <div class="d-flex justify-content-end">
-    <button
-      type="submit"
-      class="btn btn-primary btn-lg otree-btn-next"
-    >
+    <button type="submit" class="btn btn-primary btn-lg otree-btn-next">
       {% if language == 'en' %}Next{% else %}Avanti{% endif %}
     </button>
   </div>
@@ -54,47 +62,57 @@
 
 {% block scripts %}
 <script>
-(function(){
-  const chosenProbs    = {{ chosen_probs|safe }},
-        unchosenProbs  = {{ unchosen_probs|safe }},
-        stoppedAngRad  = ({{ stopped_angle }} * Math.PI/180),
-        isTreatment = "{{ treatment }}" === "treatment";
+(function() {
+  const chosenProbs   = {{ chosen_probs|safe }},
+        unchosenProbs = {{ unchosen_probs|safe }},
+        stoppedAngRad = ({{ stopped_angle }} * Math.PI / 180),
+        isTreatment   = "{{ treatment }}" === "treatment";
 
-  const radius = 140, center={x:150,y:150};
-  function drawWheel(ctx,probs){
-    let start= Math.PI/2, colors=['#2bc31f','#d70000'];
-    probs.forEach((p,i)=>{let slice=p*2*Math.PI;
+  const radius = 140, center = { x: 150, y: 150 };
+
+  function drawWheel(ctx, probs) {
+    let start = Math.PI / 2;
+    const colors = ['#2bc31f', '#d70000'];
+    probs.forEach((p, i) => {
+      const slice = p * 2 * Math.PI;
       ctx.beginPath();
-      ctx.moveTo(center.x,center.y);
-      ctx.arc(center.x,center.y,radius,start,start+slice);
-      ctx.fillStyle=colors[i];
-      ctx.fill(); start+=slice;
+      ctx.moveTo(center.x, center.y);
+      ctx.arc(center.x, center.y, radius, start, start + slice);
+      ctx.fillStyle = colors[i];
+      ctx.fill();
+      start += slice;
     });
   }
-  function drawArrow(ctx,angle){
-    const L=radius*1.5,h=15,half=L/2,tail=-half,tip=half,base=tip-h;
+
+  function drawArrow(ctx, angle) {
+    const L = radius * 1.5, h = 15;
+    const half = L / 2, tail = -half, tip = half, base = tip - h;
     ctx.save();
-    ctx.translate(center.x,center.y);
+    ctx.translate(center.x, center.y);
     ctx.rotate(angle);
-    // shaft
-    ctx.beginPath();ctx.moveTo(tail,0);ctx.lineTo(base,0);
-    ctx.strokeStyle='black';ctx.lineWidth=4;ctx.lineCap='round';ctx.stroke();
-    // head
-    ctx.beginPath();ctx.moveTo(tip,0);
-    ctx.lineTo(base,h);ctx.lineTo(base,-h);
-    ctx.closePath();ctx.fillStyle='black';ctx.fill();
+    ctx.beginPath(); ctx.moveTo(tail, 0); ctx.lineTo(base, 0);
+    ctx.strokeStyle = 'black'; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(tip, 0); ctx.lineTo(base, h); ctx.lineTo(base, -h);
+    ctx.closePath(); ctx.fillStyle = 'black'; ctx.fill();
     ctx.restore();
   }
 
-  // chosen
-  let cCtx=document.getElementById('chosenWheelStatic').getContext('2d');
-  drawWheel(cCtx,chosenProbs);
-  drawArrow(cCtx,stoppedAngRad);
-  // unchosen
-  if(isTreatment){
-    let uCtx=document.getElementById('unchosenWheelStatic').getContext('2d');
-    drawWheel(uCtx,unchosenProbs);
-    drawArrow(uCtx,stoppedAngRad);
+  // Setup chosen wheel
+  const cCanvas = document.getElementById('chosenWheelStatic');
+  cCanvas.width = 300;
+  cCanvas.height = 300;
+  const cCtx = cCanvas.getContext('2d');
+  drawWheel(cCtx, chosenProbs);
+  drawArrow(cCtx, stoppedAngRad);
+
+  // Setup unchosen wheel only if applicable
+  if (isTreatment) {
+    const uCanvas = document.getElementById('unchosenWheelStatic');
+    uCanvas.width = 300;
+    uCanvas.height = 300;
+    const uCtx = uCanvas.getContext('2d');
+    drawWheel(uCtx, unchosenProbs);
+    drawArrow(uCtx, stoppedAngRad);
   }
 })();
 </script>
