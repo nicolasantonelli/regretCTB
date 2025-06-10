@@ -3,10 +3,10 @@
     <div class="container py-4 px-3 bg-white border rounded shadow-sm">
         {% if language == 'it' %}
             <h3 class="text-center text-primary fw-semibold mb-4">Scelta Intertemporale</h3>
-            <p class="fs-5 fw-semibold text-primary">Hai un budget di €1.000. Distribuiscilo tra immediatamente e tra 3 settimane.</p>
+            <p class="fs-5 fw-semibold text-primary">Hai un budget di €1.000. Distribuiscilo tra immediatamente e tra 4 settimane.</p>
         {% else %}
             <h3 class="text-center text-primary fw-semibold mb-4">Intertemporal Choice</h3>
-            <p class="fs-5 fw-semibold text-primary">You have a budget of €1,000. Allocate this amount between right now and 3 weeks from now.</p>
+            <p class="fs-5 fw-semibold text-primary">You have a budget of €1,000. Allocate this amount between right now and 4 weeks from now.</p>
         {% endif %}
         <hr>
 
@@ -46,7 +46,7 @@
                     <div class="col-md-6">
                         <div class="form-group border border-primary rounded p-3 bg-light shadow-sm text-center">
                             <label class="fs-5 mb-2" for="alloc_late{{ forloop.counter }}">
-                                {% if language == 'it' %}Tra 3 settimane:{% else %}3 Weeks:{% endif %}
+                                {% if language == 'it' %}Tra 4 settimane:{% else %}4 weeks:{% endif %}
                             </label>
                             <input
                                 id="alloc_late{{ forloop.counter }}"

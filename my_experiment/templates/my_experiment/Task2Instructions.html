@@ -31,9 +31,9 @@
     </li>
     <li>
       {% if player.selected_language == 'it' %}
-        <strong>Futuro</strong> (tra 3 settimane) <!--TODO: modificare time delay?-->
+        <strong>Futuro</strong> (tra 4 settimane) <!--TODO: modificare time delay?-->
       {% else %}
-        <strong>Later</strong> (in 3 weeks)
+        <strong>Later</strong> (in 4 weeks)
       {% endif %}
     </li>
   </ul>
@@ -83,7 +83,8 @@
     {% if player.selected_language == 'it' %}
       Alla fine dell'esperimento, <strong>una</strong> delle cinque decisioni verrà selezionata casualmente. <!--per il pagamento. Riceverai immediatamente l'importo allocato per oggi, mentre l'importo per il futuro sarà pagato tra 3 settimane.-->
     {% else %}
-      At the end of the experiment, <strong>one</strong> of the five decisions will be randomly selected. <!-- for payment. You will immediately receive the amount of money you allocated on today, while the amount allocated for the future will be paid out in 3 weeks.-->
+      At the end of the experiment, <strong>one</strong> of the five decisions will be randomly selected. <!-- for payment. You will immediately receive the amount of money you allocated on today, while the amount allocated for the future will be paid out in 4
+       weeks.-->
     {% endif %}
   </p>
 
