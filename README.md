@@ -55,8 +55,5 @@ License
 
 This project is for academic, non-commercial use. Contact the author for other uses.
 
-Author
-
-Nicolas Aantonelli
-MSc in Behavioral and Applied Economics
+Author: Nicolas Antonelli (MSc in Behavioral and Applied Economics, University of Trento)
 Thesis Supervisors: doc. Austėja Kažemekaitytė and prof. Matteo Ploner
