@@ -35,12 +35,19 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     # Privacy policy fields
 
+    def get_lotteries(self):
+        """Returns (chosen_lottery, unchosen_lottery) as a tuple."""
+        if self.chosen_lottery == 'A':
+            return C.LOTTERY_A, C.LOTTERY_B
+        else:
+            return C.LOTTERY_B, C.LOTTERY_A
+
     outcome = models.CurrencyField()
     unchosen_outcome = models.CurrencyField(
         initial=None,
         doc="What the unchosen lottery would have paid out"
     )
-    regret_rejoice = models.StringField()
+    regret_rejoice = models.StringField(blank=True)
 
     confirm_age = models.BooleanField(
         label="I am at least 18 years old and consent to participate",

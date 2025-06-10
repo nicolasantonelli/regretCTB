@@ -11,6 +11,7 @@ class LanguageChoice(Page):
     form_model = 'player'
     form_fields = ['selected_language']
 
+
 class PrivacyPolicy(Page):
     form_model = 'player'
     form_fields = ['confirm_age', 'confirm_withdraw', 'confirm_privacy']
@@ -46,12 +47,7 @@ class SpinArrow(Page):
     form_fields = ['stopped_angle']
 
     def vars_for_template(self):
-        if self.player.chosen_lottery == 'A':
-            chosen = C.LOTTERY_A
-            unchosen = C.LOTTERY_B
-        else:
-            chosen = C.LOTTERY_B
-            unchosen = C.LOTTERY_A
+        chosen, unchosen = self.player.get_lotteries()
         return {
             'language': self.player.selected_language,
             'initial_angle': self.player.arrow_angle,
@@ -65,19 +61,16 @@ class SpinArrow(Page):
     def before_next_page(self, timeout_happened=False):
         p = self.player
         spin_angle = p.stopped_angle % 360
-        if p.chosen_lottery == 'A':
-            chosen = C.LOTTERY_A
-            unchosen = C.LOTTERY_B
-        else:
-            chosen = C.LOTTERY_B
-            unchosen = C.LOTTERY_A
+        chosen, unchosen = self.player.get_lotteries()
 
         def get_outcome(test_angle, probs, outcomes):
             """
-            Given a clockwise angle (0-360), probabilities (summing to 1), and outcomes [win, loss],
-            return the correct outcome.
-            The first outcome corresponds to the first slice drawn starting at 90° (Math.PI/2).
-            """
+    Convert a spin angle (0–360°) into a lottery outcome.
+
+    The pie chart starts at 90°, and each slice size is based on its probability.
+    If the spin lands within a slice, return the associated outcome.
+    This also handles wrap-around if the slice crosses the 0° mark.
+    """
             start_angle = 90  # Drawing starts at 90°
             for prob, outcome in zip(probs, outcomes):
                 slice_size = prob * 360
@@ -103,13 +96,13 @@ class SpinArrow(Page):
             else:
                 p.regret_rejoice = 'neutral'
         else:
-            p.regret_rejoice = None
+            p.regret_rejoice = ''
 
 
 class Task1Payoff(Page):
     def vars_for_template(self):
         p = self.player
-        #initial = C.INITIAL_ENDOWMENT   # from your constants
+#        #initial = C.INITIAL_ENDOWMENT   # from your constants
         gained = p.outcome             # the lottery result stored earlier
         final = gained  #+ initial
 
@@ -120,12 +113,7 @@ class Task1Payoff(Page):
         unchosen_gain = p.unchosen_outcome
         unchosen_total = unchosen_gain
 
-        if p.chosen_lottery == 'A':
-            chosen = C.LOTTERY_A
-            unchosen = C.LOTTERY_B
-        else:
-            chosen = C.LOTTERY_B
-            unchosen = C.LOTTERY_A
+        chosen, unchosen = self.player.get_lotteries()
         return {
             #'initial': initial,
             'language': self.player.selected_language,
@@ -163,7 +151,7 @@ class Task2(Page):
     ]
 
     def vars_for_template(self):
-        # Use a fixed budget of 100 for everyone
+        # Use a fixed budget of 1000 for everyone
         return {
             'language': self.player.selected_language,
             'budget': C.BUDGET,
@@ -215,6 +203,7 @@ class Questionnaire(Page):
 class Sample (Page):
     form_model = 'player'
     form_fields = ['age', 'gender', 'education', 'employment']
+
 
 class End(Page):
     def vars_for_template(self, timeout_happened=False):

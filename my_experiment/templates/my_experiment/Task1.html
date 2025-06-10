@@ -2,16 +2,15 @@
 {% load static %}
 
 {% block content %}
-<div class="container bg-white p-4 rounded shadow-sm mt-4">
   {% if language == 'it' %}
-    <h3 class="text-center text-primary fw-semibold mb-4">Compito 1: Lotteria</h3>
+    <h3>Compito 1: Lotteria</h3>
   {% else %}
-    <h3 class="text-center text-primary fw-semibold mb-4">Task 1: Lottery</h3>
+    <h3>Task 1: Lottery</h3>
   {% endif %}
 <hr>
   <div class="row">
     <!-- Lottery A -->
-    <div class="col text-center border rounded p-4 mx-2 shadow-sm bg-light">
+    <div class="col text-center">
       {% if language == 'it' %}
         <h4>Lotteria A</h4>
       {% else %}
@@ -40,7 +39,7 @@
     </div>
 
     <!-- Lottery B -->
-    <div class="col text-center border rounded p-4 mx-2 shadow-sm bg-light">
+    <div class="col text-center">
       {% if language == 'it' %}
         <h4>Lotteria B</h4>
       {% else %}
@@ -68,7 +67,6 @@
       </button>
     </div>
   </div>
-</div>
 {% endblock %}
 
 {% block scripts %}
@@ -110,7 +108,7 @@
   // Wheel A: start at +90° (π/2)
   drawStaticWheel(ctxA, probsA, Math.PI/2);
 
-  // Wheel B: start at –90° (–π/2)
+  // Wheel B: start at +90° (π/2)
   drawStaticWheel(ctxB, probsB, Math.PI/2);
 })();
 </script>
