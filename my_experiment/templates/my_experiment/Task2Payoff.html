@@ -1,23 +1,73 @@
 {% extends "global/Page.html" %}
+
 {% block content %}
-    <style>
+<div class="container mt-4">
+  <h3 class="mb-4">
+    {% if player.selected_language == 'it' %}
+      Risultati del Compito 2
+    {% else %}
+      Task 2 Results
+    {% endif %}
+  </h3>
+  <hr>
+  <div class="alert alert-primary fs-5">
+    {% if player.selected_language == 'it' %}
+      La decisione selezionata casualmente per il pagamento è la <strong> Decisione {{ selected }} </strong>.
+    {% else %}
+      The choice that was randomly selected for payment is <strong> Decision {{ selected }} </strong>.
+    {% endif %}
+  </div>
 
-</style>
+  <div class="card border-primary mb-4">
+    <div class="card-body">
+      <p class="fs-5 mb-2">
+        {% if player.selected_language == 'it' %}
+          Riceverai:
+        {% else %}
+          You will receive:
+        {% endif %}
+      </p>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item fs-5">
+          <strong>{{ today_str }}</strong>
+          {% if player.selected_language == 'it' %}
+            Euro <u><em>immediatamente</em></u>
+          {% else %}
+            Euros <u><em>right now</em></u>
+          {% endif %}
+        </li>
+        <li class="list-group-item fs-5">
+          <strong>{{ future_str }}</strong>
+          {% if player.selected_language == 'it' %}
+            Euro <u><em>tra 4 settimane</em></u>
+          {% else %}
+            Euros <u><em>in 4 weeks</em></u>
+          {% endif %}
+        </li>
+      </ul>
+    </div>
+  </div>
 
-  <h3 class="text-center text-primary fw-semibold mb-4">Outcome of Task 2</h3>
-    <hr>
-  <p class="fs-5">We randomly selected <strong>Decision {{ selected }}</strong> for payment.</p>
-  <p class="fs-5">You will receive:</p>
-  <ul class="fs-5">
-    <li class="fs-5"><strong>{{ today_str }}</strong> Euros <em>today</em></li>
-    <li class="fs-5"><strong>{{ future_str }}</strong> Euros <em>in three weeks</em></li> <!--todo: CHECK WHY THE CALCULATIONS ARE WRONG-->
-  </ul>
- <div class="d-flex justify-content-end">
-  <button
-    type="submit"
-    class="btn btn-primary btn-lg otree-btn-next"
-  >
-    Next
-  </button>
+  <div class="mt-4">
+    <p class="fs-5">
+      {% if player.selected_language == 'it' %}
+        Clicca sul pulsante in basso a destra dello schermo per terminare l'esperimento.
+      {% else %}
+        Please, click on the button at the bottom right of the screen to end the experiment.
+      {% endif %}
+    </p>
+    <div class="d-flex justify-content-end">
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg otree-btn-next"
+      >
+        {% if player.selected_language == 'it' %}
+          Termina Esperimento
+        {% else %}
+          End Experiment
+        {% endif %}
+      </button>
+    </div>
+  </div>
 </div>
 {% endblock %}

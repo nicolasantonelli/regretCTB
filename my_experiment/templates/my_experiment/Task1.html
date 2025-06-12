@@ -17,7 +17,7 @@
         <h4>Lottery A</h4>
       {% endif %}
 
-      <!-- static wheel A -->
+      <!-- _static wheel A -->
       <canvas id="wheelA" width="200" height="200" class="mb-3"></canvas>
 
       {% if language == 'it' %}
@@ -46,7 +46,7 @@
         <h4>Lottery B</h4>
       {% endif %}
 
-      <!-- static wheel B -->
+      <!-- _static wheel B -->
       <canvas id="wheelB" width="200" height="200" class="mb-3"></canvas>
 
       {% if language == 'it' %}
@@ -86,7 +86,7 @@
         colors = ['#2bc31f','#d70000'];
 
   /**
-   * Draws a static wheel on `ctx`, starting at `startAngle`.
+   * Draws a _static wheel on `ctx`, starting at `startAngle`.
    * @param  {CanvasRenderingContext2D} ctx
    * @param  {number[]} probs      fraction of circle [0–1]
    * @param  {number} startAngle  in radians

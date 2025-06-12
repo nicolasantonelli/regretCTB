@@ -1,73 +1,34 @@
 {% extends "global/Page.html" %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-5 text-center">
   <h3 class="mb-4">
     {% if player.selected_language == 'it' %}
-      Risultati del Compito 2
+      Hai raggiunto la fine dell'esperimento.
     {% else %}
-      Task 2 Results
+      You have reached the final page of the experiment.
     {% endif %}
   </h3>
-  <hr>
-  <div class="alert alert-primary fs-5">
+  <p class="fs-5 mb-4">
     {% if player.selected_language == 'it' %}
-      La decisione selezionata casualmente per il pagamento è la <strong> Decisione {{ selected }} </strong>.
+      Grazie per la tua partecipazione.
     {% else %}
-      The choice that was randomly selected for payment is <strong> Decision {{ selected }} </strong>.
+      Thank you for your participation.
     {% endif %}
-  </div>
-
-  <div class="card border-primary mb-4">
-    <div class="card-body">
-      <p class="fs-5 mb-2">
-        {% if player.selected_language == 'it' %}
-          Riceverai:
-        {% else %}
-          You will receive:
-        {% endif %}
-      </p>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item fs-5">
-          <strong>{{ today_str }}</strong>
-          {% if player.selected_language == 'it' %}
-            Euro <u><em>immediatamente</em></u>
-          {% else %}
-            Euros <u><em>right now</em></u>
-          {% endif %}
-        </li>
-        <li class="list-group-item fs-5">
-          <strong>{{ future_str }}</strong>
-          {% if player.selected_language == 'it' %}
-            Euro <u><em>tra 4 settimane</em></u>
-          {% else %}
-            Euros <u><em>in 4 weeks</em></u>
-          {% endif %}
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="mt-4">
-    <p class="fs-5">
-      {% if player.selected_language == 'it' %}
-        Clicca sul pulsante in basso a destra dello schermo per terminare l'esperimento.
-      {% else %}
-        Please, click on the button at the bottom right of the screen to end the experiment.
-      {% endif %}
-    </p>
-    <div class="d-flex justify-content-end">
-      <button
-        type="submit"
-        class="btn btn-primary btn-lg otree-btn-next"
-      >
-        {% if player.selected_language == 'it' %}
-          Termina Esperimento
-        {% else %}
-          End Experiment
-        {% endif %}
-      </button>
-    </div>
-  </div>
+  </p>
+  <p class="fs-5 mb-4">
+    {% if player.selected_language == 'it' %}
+      Clicca sul pulsante qui sotto per terminare l'esperimento.
+    {% else %}
+      Please click on the button below to end the experiment.
+    {% endif %}
+  </p>
+  <button type="submit" class="btn btn-primary btn-lg otree-btn-next">
+    {% if player.selected_language == 'it' %}
+      Termina Esperimento
+    {% else %}
+      End Experiment
+    {% endif %}
+  </button>
 </div>
 {% endblock %}
