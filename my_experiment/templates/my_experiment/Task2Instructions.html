@@ -14,10 +14,10 @@
   <p class="fs-5">
     {% if player.selected_language == 'it' %}
       Nel secondo compito, ti verrà chiesto di completare <strong>5 decisioni</strong>.
-      Per ciascuna decisione (dalla 1 alla 5), ti verrà chiesto di allocare tra due date una somma di denaro da ricevere:
+      Per ciascuna decisione, ti verrà chiesto di allocare tra due date una somma di denaro da ricevere:
     {% else %}
       For the second task, you will be faced with <strong>5 decisions</strong>.
-      For each decision (1 through 5), you are asked to allocate a sum of money to be given to you between two dates:
+      For each decision, you are asked to allocate a sum of money to be given to you between two dates:
     {% endif %}
   </p>
 
@@ -83,7 +83,7 @@
 
   <p class="fs-5 text-danger">
     {% if player.selected_language == 'it' %}
-      <strong>Importante:</strong> Devi completare <em>tutte</em> e 5 le decisioni prima di poter procedere.
+      <strong>Importante:</strong> Dovrai completare <em>tutte</em> e 5 le decisioni prima di poter procedere.
     {% else %}
       <strong>Important:</strong> You must complete <em>all</em> 5 decisions before you can proceed.
     {% endif %}
