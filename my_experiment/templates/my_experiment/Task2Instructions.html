@@ -14,67 +14,67 @@
   <p class="fs-5">
     {% if player.selected_language == 'it' %}
       Nel secondo compito, ti verrà chiesto di completare <strong>5 decisioni</strong>.
-      Per ciascuna decisione (dalla 1 alla 5), ti verrà chiesto di allocare una somma di denaro tra due date di pagamento:
+      Per ciascuna decisione (dalla 1 alla 5), ti verrà chiesto di allocare tra due date una somma di denaro da ricevere:
     {% else %}
       For the second task, you will be faced with <strong>5 decisions</strong>.
-      For each decision (1 through 5), you are asked to allocate a sum of money between two payment dates:
+      For each decision (1 through 5), you are asked to allocate a sum of money to be given to you between two dates:
     {% endif %}
   </p>
 
   <ul class="fs-5">
     <li>
       {% if player.selected_language == 'it' %}
-        <strong>Presente</strong> (immediatamente)
+        <strong>Immediatamente</strong>
       {% else %}
-        <strong>Earlier</strong> (right now)
+        <strong>Right now</strong>
       {% endif %}
     </li>
     <li>
       {% if player.selected_language == 'it' %}
-        <strong>Futuro</strong> (tra 4 settimane) <!--TODO: modificare time delay?-->
+        <strong>Tra 4 settimane</strong>
       {% else %}
-        <strong>Later</strong> (in 4 weeks)
+        <strong>In 4 weeks</strong>
       {% endif %}
     </li>
   </ul>
 
   <p class="fs-5">
     {% if player.selected_language == 'it' %}
-      Hai un budget di <strong>€ 1.000</strong> in ciascuna decisione, e puoi dividerlo come preferisci.
+      Per ogni decisione, hai a disposizione <strong>€ 1.000</strong> da dividere come preferisci.
     {% else %}
-      You have a budget of <strong>€ 1.000</strong> in each decision, and you can split it however you like.
+      For each decision, you have <strong>€ 1.000</strong> that you can split between the two dates however you like.
     {% endif %}
   </p>
 <div class="alert alert-primary rounded">
   <h5>
     {% if player.selected_language == 'it' %}
-      Tasso di sconto
+      Tasso d'interesse
     {% else %}
-      Discount Rate
+      Interest Rate
     {% endif %}
   </h5>
 
   <ul class="fs-5">
     <li>
       {% if player.selected_language == 'it' %}
-        Ogni Euro allocato a <strong>oggi</strong> vale 1.
+        Ogni Euro che vuoi ricevere <strong>oggi</strong> vale 1.
         <br>
-        <em>Esempio:</em> Se scegli di avere 10 Euro immediatamente, riceverai 10 Euro.
+        <em>Esempio:</em> Se scegli di ricevere 10 Euro immediatamente, otterrai 10 Euro.
       {% else %}
-        Each Euro allocated to <strong>right now</strong> is worth 1.
+        Each Euro that you choose to receive <strong>right now</strong> is worth 1.
         <br>
-        <em>Example:</em> If you put 10 Euros on right now, you receive 10 Euros.
+        <em>Example:</em> If you decide to receive 10 Euros right now, you receive 10 Euros.
       {% endif %}
     </li>
     <li>
       {% if player.selected_language == 'it' %}
-        Ogni Euro allocato a <strong>tra 4 settimane</strong> vale più di 1.
+        Ogni Euro che vuoi ricevere <strong>tra 4 settimane</strong> vale più di 1.
         <br>
-        <em>Esempio:</em> Se il tasso è 1.5 e assegni 10 Euro al futuro, tra 4 settimane riceverai 10 × 1.5 = <strong>15 Euro</strong>.
+        <em>Esempio:</em> Se il tasso è 1.5 e vuoi ricevere 10 Euro in futuro, tra 4 settimane riceverai 10 × 1.5 = <strong>15 Euro</strong>.
       {% else %}
-        Each Euro allocated to <strong>4 weeks from now</strong> is worth more than 1.
+        Each Euro that you want to receive <strong>4 weeks from now</strong> is worth more than 1.
         <br>
-        <em>Example:</em> If the rate is 1.5 and you allocate 10 Euros for the future, in 4 weeks you will receive 10 × 1.5 = <strong>15 Euros</strong>.
+        <em>Example:</em> If the rate is 1.5 and you want to receive 10 Euros in the future, in 4 weeks you will receive 10 × 1.5 = <strong>15 Euros</strong>.
       {% endif %}
     </li>
   </ul>
