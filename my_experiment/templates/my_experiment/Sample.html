@@ -11,75 +11,75 @@
   </h2>
   <form method="post">
     <div class="mb-3">
-      <label class="form-label" for="age">
+      <label class="form-label fs-5" for="age">
         {% if player.selected_language == 'it' %}Età{% else %}Age{% endif %}
       </label>
       <input type="number" class="form-control" id="age" name="age" required>
     </div>
 
     <div class="mb-3">
-      <label class="form-label" for="gender">
+      <label class="form-label fs-5" for="gender">
         {% if player.selected_language == 'it' %}Genere{% else %}Gender{% endif %}
       </label>
-      <select class="form-select" id="gender" name="gender" required>
+      <select class="form-select fs-5" id="gender" name="gender" required>
         {% if player.selected_language == 'it' %}
-          <option value="">Seleziona...</option>
-          <option value="male">Maschio</option>
-          <option value="female">Femmina</option>
-          <option value="prefer_not">Preferisco non rispondere</option>
+          <option class="fs-5" value="">Seleziona...</option>
+          <option class="fs-5" value="male">Maschio</option>
+          <option class="fs-5" value="female">Femmina</option>
+          <option class="fs-5" value="prefer_not">Preferisco non rispondere</option>
         {% else %}
-          <option value="">Select...</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="prefer_not">Prefer not to say</option>
+          <option class="fs-5" value="">Select...</option>
+          <option class="fs-5" value="male">Male</option>
+          <option class="fs-5" value="female">Female</option>
+          <option class="fs-5" value="prefer_not">Prefer not to say</option>
         {% endif %}
       </select>
     </div>
 
     <div class="mb-3">
-      <label class="form-label" for="education">
+      <label class="form-label fs-5" for="education">
         {% if player.selected_language == 'it' %}Livello di istruzione più alto raggiunto{% else %}Highest level of education completed{% endif %}
       </label>
-      <select class="form-select" id="education" name="education" required>
+      <select class="form-select fs-5" id="education" name="education" required>
         {% if player.selected_language == 'it' %}
-          <option value="">Seleziona...</option>
-          <option value="none">Nessuna istruzione formale</option>
-          <option value="primary">Scuola elementare</option>
-          <option value="middle">Scuola media</option>
-          <option value="highschool">Diploma di scuola superiore</option>
-          <option value="bachelors">Laurea triennale</option>
-          <option value="masters">Laurea magistrale</option>
-          <option value="phd">Dottorato di ricerca</option>
+          <option class="fs-5" value="">Seleziona...</option>
+          <option class="fs-5" value="none">Nessuna istruzione formale</option>
+          <option class="fs-5" value="primary">Scuola elementare</option>
+          <option class="fs-5" value="middle">Scuola media</option>
+          <option class="fs-5" value="highschool">Diploma di scuola superiore</option>
+          <option class="fs-5" value="bachelors">Laurea triennale</option>
+          <option class="fs-5" value="masters">Laurea magistrale</option>
+          <option class="fs-5" value="phd">Dottorato di ricerca</option>
         {% else %}
-          <option value="">Select...</option>
-          <option value="none">No formal education</option>
-          <option value="primary">Primary school</option>
-          <option value="middle">Middle school</option>
-          <option value="highschool">High school diploma</option>
-          <option value="bachelors">Bachelor's degree</option>
-          <option value="masters">Master's degree</option>
-          <option value="phd">PhD</option>
+          <option class="fs-5" value="">Select...</option>
+          <option class="fs-5" value="none">No formal education</option>
+          <option class="fs-5" value="primary">Primary school</option>
+          <option class="fs-5" value="middle">Middle school</option>
+          <option class="fs-5" value="highschool">High school diploma</option>
+          <option class="fs-5" value="bachelors">Bachelor's degree</option>
+          <option class="fs-5" value="masters">Master's degree</option>
+          <option class="fs-5" value="phd">PhD</option>
         {% endif %}
       </select>
     </div>
 
     <div class="mb-3">
-      <label class="form-label" for="employment">
+      <label class="form-label fs-5" for="employment">
         {% if player.selected_language == 'it' %}Stato occupazionale{% else %}Employment status{% endif %}
       </label>
-      <select class="form-select" id="employment" name="employment" required>
+      <select class="form-select fs-5" id="employment" name="employment" required>
         {% if player.selected_language == 'it' %}
-          <option value="">Seleziona...</option>
-          <option value="student">Studente</option>
-          <option value="workingstudent">Studente-lavoratore</option>
-          <option value="unemployed">Disoccupato</option>
-          <option value="employed">Occupato</option>
+          <option class="fs-5" value="">Seleziona...</option>
+          <option class="fs-5" value="student">Studente</option>
+          <option class="fs-5" value="workingstudent">Studente-lavoratore</option>
+          <option class="fs-5" value="unemployed">Disoccupato</option>
+          <option class="fs-5" value="employed">Occupato</option>
         {% else %}
-          <option value="">Select...</option>
-          <option value="student">Student</option>
-          <option value="workingstudent">Working student</option>
-          <option value="unemployed">Unemployed</option>
-          <option value="employed">Employed</option>
+          <option class="fs-5" value="">Select...</option>
+          <option class="fs-5" value="student">Student</option>
+          <option class="fs-5" value="workingstudent">Working student</option>
+          <option class="fs-5" value="unemployed">Unemployed</option>
+          <option class="fs-5" value="employed">Employed</option>
         {% endif %}
       </select>
     </div>
