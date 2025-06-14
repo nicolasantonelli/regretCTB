@@ -26,6 +26,23 @@
     <div style="text-align: center;">
       <div><strong>{% if player.selected_language == 'it' %}Lotteria scelta{% else %}Chosen Lottery{% endif %}</strong></div>
       <canvas id="chosenWheel" class="wheel-canvas"></canvas>
+      {% if player.chosen_lottery == 'A' %}
+        {% if player.selected_language == 'it' %}
+          <p class="fs-5 mt-2">50% di probabilità di vincere 200€</p>
+          <p class="fs-5">50% di probabilità di perdere 200€</p>
+        {% else %}
+          <p class="fs-5 mt-2">50% chance to win €200</p>
+          <p class="fs-5">50% chance to lose €200</p>
+        {% endif %}
+      {% elif player.chosen_lottery == 'B' %}
+        {% if player.selected_language == 'it' %}
+          <p class="fs-5 mt-2">50% di probabilità di vincere 500€</p>
+          <p class="fs-5">50% di probabilità di perdere 500€</p>
+        {% else %}
+          <p class="fs-5 mt-2">50% chance to win €500</p>
+          <p class="fs-5">50% chance to lose €500</p>
+        {% endif %}
+      {% endif %}
     </div>
 
     <!-- Only render this block for the treatment group -->
@@ -33,6 +50,23 @@
       <div style="text-align: center;">
         <div><strong>{% if player.selected_language == 'it' %}Lotteria non scelta{% else %}Unchosen Lottery{% endif %}</strong></div>
         <canvas id="unchosenWheel" class="wheel-canvas"></canvas>
+        {% if player.chosen_lottery == 'A' %}
+          {% if player.selected_language == 'it' %}
+            <p class="fs-5 mt-2">50% di probabilità di vincere 500€</p>
+            <p class="fs-5">50% di probabilità di perdere 500€</p>
+          {% else %}
+            <p class="fs-5 mt-2">50% chance to win €500</p>
+            <p class="fs-5">50% chance to lose €500</p>
+          {% endif %}
+        {% elif player.chosen_lottery == 'B' %}
+          {% if player.selected_language == 'it' %}
+            <p class="fs-5 mt-2">50% di probabilità di vincere 200€</p>
+            <p class="fs-5">50% di probabilità di perdere 200€</p>
+          {% else %}
+            <p class="fs-5 mt-2">50% chance to win €200</p>
+            <p class="fs-5">50% chance to lose €200</p>
+          {% endif %}
+        {% endif %}
       </div>
     {% endif %}
   </div>
@@ -62,8 +96,9 @@
 
   // Canvas helpers
   const radius = 140, center = { x:150, y:150 };
-  function drawWheel(ctx, probs) {
-    let start = Math.PI/2, colors = ['#2bc31f','#d70000'];
+  function drawWheel(ctx, probs, dull = false) {
+    let start = Math.PI/2;
+    const colors = dull ? ['#a4d3a2', '#d88f8f'] : ['#2bc31f','#d70000'];
     probs.forEach((p,i) => {
       const slice = p * 2 * Math.PI;
       ctx.beginPath();
@@ -74,7 +109,7 @@
       start += slice;
     });
   }
-  function drawArrow(ctx, angle, visible) {
+  function drawArrow(ctx, angle, visible, dull = false) {
     const overallArrowLength = radius * 1.5;
     const headLengthParam = 15;
     const halfLen = overallArrowLength / 2;
@@ -84,7 +119,7 @@
     ctx.save();
     ctx.translate(center.x, center.y);
     ctx.rotate(angle);
-    ctx.globalAlpha = visible ? 1 : 0;
+    ctx.globalAlpha = dull ? 0.5 : (visible ? 1 : 0);
     // shaft
     ctx.beginPath();
     ctx.moveTo(tailX, 0);
@@ -130,8 +165,8 @@
   drawWheel(ctxChosen, chosenProbs);
   drawArrow(ctxChosen, angle, true);
   if (ctxUnchosen) {
-    drawWheel(ctxUnchosen, unchosenProbs);
-    drawArrow(ctxUnchosen, angle, false);
+    drawWheel(ctxUnchosen, unchosenProbs, true);
+    // do NOT draw the arrow yet — wait until STOP
   }
 
   function frame() {
@@ -147,8 +182,10 @@
     // redraw unchosen
     if (ctxUnchosen) {
       ctxUnchosen.clearRect(0, 0, 300, 300);
-      drawWheel(ctxUnchosen, unchosenProbs);
-      drawArrow(ctxUnchosen, angle, showUn);
+      drawWheel(ctxUnchosen, unchosenProbs, true);
+      if (showUn) {
+        drawArrow(ctxUnchosen, angle, true, true);
+      }
     }
 
     if (slowing && speed < 0.001) {

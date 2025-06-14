@@ -6,25 +6,24 @@
     {% if player.selected_language == 'it' %}
       Compito 2: Scelte intertemporali
     {% else %}
-      Task 2: Intertemporal choice
+      Task 2: Intertemporal Choice
     {% endif %}
   </h3>
   <hr>
 
   <p class="fs-5">
     {% if player.selected_language == 'it' %}
-      Nel secondo compito, ti verrà chiesto di completare <strong>5 decisioni</strong>.
-      Per ciascuna decisione, ti verrà chiesto di allocare tra due date una somma di denaro da ricevere:
+      In questo compito ti verrà chiesto di completare <strong>5 decisioni</strong>.
+      In ciascuna decisione dovrai dividere un importo di <strong>€1.000</strong> tra i seguenti momenti temporali:
     {% else %}
-      For the second task, you will be faced with <strong>5 decisions</strong>.
-      For each decision, you are asked to allocate a sum of money to be given to you between two dates:
+      In this task, you will make <strong>5 decisions</strong>.
+      In each decision, you will be asked to split <strong>€1,000</strong> between the following dates:
     {% endif %}
   </p>
-
   <ul class="fs-5">
     <li>
       {% if player.selected_language == 'it' %}
-        <strong>Immediatamente</strong>
+        <strong>Subito</strong>
       {% else %}
         <strong>Right now</strong>
       {% endif %}
@@ -40,61 +39,61 @@
 
   <p class="fs-5">
     {% if player.selected_language == 'it' %}
-      Per ogni decisione, hai a disposizione <strong>€ 1.000</strong> da dividere come preferisci.
+      Puoi dividere i €1.000 come preferisci tra le due date. Ad esempio, puoi scegliere di ricevere €600 subito e €400 tra 4 settimane, oppure qualsiasi altra combinazione che sommi esattamente a €1.000.
     {% else %}
-      For each decision, you have <strong>€ 1.000</strong> that you can split between the two dates however you like.
+      You can divide the €1,000 however you like between the two dates. For example, you could choose to receive €600 now and €400 in 4 weeks, or any other combination that adds up to exactly €1,000.
     {% endif %}
   </p>
-<div class="alert alert-primary rounded">
-  <h5>
-    {% if player.selected_language == 'it' %}
-      Tasso d'interesse
-    {% else %}
-      Interest Rate
-    {% endif %}
-  </h5>
 
-  <ul class="fs-5">
-    <li>
+  <div class="alert alert-primary rounded">
+    <h5>
       {% if player.selected_language == 'it' %}
-        Ogni Euro che vuoi ricevere <strong>oggi</strong> vale 1.
-        <br>
-        <em>Esempio:</em> Se scegli di ricevere 10 Euro immediatamente, otterrai 10 Euro.
+        Tasso di interesse
       {% else %}
-        Each Euro that you choose to receive <strong>right now</strong> is worth 1.
-        <br>
-        <em>Example:</em> If you decide to receive 10 Euros right now, you receive 10 Euros.
+        Interest Rate
       {% endif %}
-    </li>
-    <li>
-      {% if player.selected_language == 'it' %}
-        Ogni Euro che vuoi ricevere <strong>tra 4 settimane</strong> vale più di 1.
-        <br>
-        <em>Esempio:</em> Se il tasso è 1.5 e vuoi ricevere 10 Euro in futuro, tra 4 settimane riceverai 10 × 1.5 = <strong>15 Euro</strong>.
-      {% else %}
-        Each Euro that you want to receive <strong>4 weeks from now</strong> is worth more than 1.
-        <br>
-        <em>Example:</em> If the rate is 1.5 and you want to receive 10 Euros in the future, in 4 weeks you will receive 10 × 1.5 = <strong>15 Euros</strong>.
-      {% endif %}
-    </li>
-  </ul>
-</div>
-  <p class="fs-5">
+    </h5>
+
+    <ul class="fs-5">
+      <li>
+        {% if player.selected_language == 'it' %}
+          Ogni Euro che scegli di ricevere <strong>subito</strong> vale esattamente 1.<br>
+          <em>Esempio:</em> Se scegli di ricevere 10 Euro subito, riceverai 10 Euro.
+        {% else %}
+          Each Euro you choose to receive <strong>right now</strong> is worth exactly 1.<br>
+          <em>Example:</em> If you choose to receive €10 right now, you will receive €10.
+        {% endif %}
+      </li>
+      <li>
+        {% if player.selected_language == 'it' %}
+           Il denaro che riceverai tra 4 settimane verrà aumentato da un tasso di interesse.<br>
+           Ogni Euro che scegli di ricevere <strong>tra 4 settimane</strong> vale più di 1.<br>
+          <em>Esempio:</em> Se il tasso è 1.5 e scegli di ricevere 10 Euro tra 4 settimane, riceverai 10 × 1.5 = <strong>15 Euro</strong>.
+        {% else %}
+          The money you receive in 4 weeks will be increased by an interest rate.<br>
+          Each Euro you choose to receive <strong>in 4 weeks</strong> is worth more than 1.<br>
+          <em>Example:</em> If the rate is 1.5 and you choose to receive €10 in 4 weeks, you will receive 10 × 1.5 = <strong>15 Euros</strong>.
+        {% endif %}
+      </li>
+    </ul>
+  </div>
 
   <p class="fs-5 text-danger">
     {% if player.selected_language == 'it' %}
-      <strong>Importante:</strong> Dovrai completare <em>tutte</em> e 5 le decisioni prima di poter procedere.
+      <strong>Importante:</strong> Devi completare <em>tutte e 5</em> le decisioni per poter procedere.
     {% else %}
-      <strong>Important:</strong> You must complete <em>all</em> 5 decisions before you can proceed.
+      <strong>Important:</strong> You must complete <em>all 5</em> decisions before you can proceed.
     {% endif %}
   </p>
 
   <div class="border border-4 border-primary rounded p-3 bg-light mb-4">
     <label for="check_task2" class="fs-5">
       {% if player.selected_language == 'it' %}
-        Domanda di comprensione: Se scegli di ricevere €400 immediatamente, quanto puoi assegnare tra 4 settimane? (Rispondi in numeri, senza simboli)
+        <strong>Domanda di comprensione</strong>: Per continuare, rispondi correttamente alla seguente domanda.<br>
+        Se assegni €400 a “Subito”, quanto ti rimane da assegnare a “Tra 4 settimane”? (Rispondi solo con numeri, senza simboli)
       {% else %}
-        Comprehension check: If you allocate €400 to right now, how much can you allocate in 4 weeks? (Answer with numbers only, no symbols)
+          <strong>Comprehension check</strong>: To proceed, you must answer the following question correctly.<br>
+          If you allocate €400 to “Right now”, how much do you have left to allocate “In 4 weeks”? (Answer with numbers only, no symbols)
       {% endif %}
     </label>
     <input
@@ -117,13 +116,15 @@
       {% endif %}
     </div>
   </div>
-<p class="fs-5">
+
+  <p class="fs-5">
     {% if player.selected_language == 'it' %}
-      Quando sei pronto, clicca sul pulsante "Avanti" per iniziare il Compito 2.
+      Quando sei pronto, clicca su "Avanti" per iniziare il Compito 2.
     {% else %}
-      When you are ready to begin, click the "Next" button to proceed to Task 2.
+      When you are ready, click “Next” to begin Task 2.
     {% endif %}
   </p>
+
   <div class="d-flex justify-content-end">
     <button type="submit" class="btn btn-primary btn-lg otree-btn-next">
       {% if player.selected_language == 'it' %} Avanti {% else %} Next {% endif %}

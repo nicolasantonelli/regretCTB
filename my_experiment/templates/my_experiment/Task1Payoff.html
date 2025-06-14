@@ -70,9 +70,9 @@
 
   const radius = 140, center = { x: 150, y: 150 };
 
-  function drawWheel(ctx, probs) {
+  function drawWheel(ctx, probs, dull = false) {
     let start = Math.PI / 2;
-    const colors = ['#2bc31f', '#d70000'];
+    const colors = dull ? ['#a4d3a2', '#d88f8f'] : ['#2bc31f', '#d70000'];
     probs.forEach((p, i) => {
       const slice = p * 2 * Math.PI;
       ctx.beginPath();
@@ -84,16 +84,18 @@
     });
   }
 
-  function drawArrow(ctx, angle) {
+  function drawArrow(ctx, angle, dull = false) {
     const L = radius * 1.5, h = 15;
     const half = L / 2, tail = -half, tip = half, base = tip - h;
     ctx.save();
     ctx.translate(center.x, center.y);
     ctx.rotate(angle);
+    ctx.globalAlpha = dull ? 0.5 : 1;
     ctx.beginPath(); ctx.moveTo(tail, 0); ctx.lineTo(base, 0);
     ctx.strokeStyle = 'black'; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.stroke();
     ctx.beginPath(); ctx.moveTo(tip, 0); ctx.lineTo(base, h); ctx.lineTo(base, -h);
     ctx.closePath(); ctx.fillStyle = 'black'; ctx.fill();
+    ctx.globalAlpha = 1;
     ctx.restore();
   }
 
@@ -111,8 +113,8 @@
     uCanvas.width = 300;
     uCanvas.height = 300;
     const uCtx = uCanvas.getContext('2d');
-    drawWheel(uCtx, unchosenProbs);
-    drawArrow(uCtx, stoppedAngRad);
+    drawWheel(uCtx, unchosenProbs, true);
+    drawArrow(uCtx, stoppedAngRad, true);
   }
 })();
 </script>

@@ -28,20 +28,22 @@
 {% endif %} <!-- TODO: Replace X with the actual estimated time -->
 
     {% if player.selected_language == 'it' %}
-      <div class="alert alert-primary">
-        <p class="fs-5 text-primary">
-          Nota: anche se l'esperimento mostrerà guadagni in Euro, questi importi sono totalmente <strong>ipotetici</strong>.
-        </p><p class="fs-5 text-primary"><u><strong>Non</strong></u> riceverai alcun pagamento reale basato sulle tue scelte.
+      <div class="alert alert-danger">
+        <p class="fs-5 text-danger text-center">
+          <i><u>Nota</u></i><br>
+            Anche se l'esperimento mostrerà guadagni in Euro, questi importi sono totalmente <strong>ipotetici</strong>.
+        </p><p class="fs-5 text-danger text-center"><u><strong>Non</strong></u> riceverai alcun pagamento reale basato sulle tue scelte.
         </p>
       </div>
     {% else %}
-      <div class="alert alert-primary">
-        <p class="fs-5 text-primary">
-          Please note: although the experiment will show earnings in Euros, these amounts are entirely <strong>hypothetical</strong>.
+      <div class="alert alert-danger">
+        <p class="fs-5 text-danger text-center">
+          <i><u>Please note</u></i><br>
+            Although the experiment will show earnings in Euros, these amounts are entirely <strong>hypothetical</strong>.<br>
           You will <u><strong>not</strong></u> receive any real payment based on your choices.
         </p>
       </div>
-    {% endif %} <!-- TODO: Replace X with the actual conversion rate -->
+    {% endif %}
 <!--<p class="fs-5"> The amount of tokens awarded to you will be based on your <strong>choices</strong> in the two tasks of the experiment. </p> -->
 {% if player.selected_language == 'it' %}
   <p class="fs-5">Ulteriori dettagli sui compiti verranno forniti nelle prossime pagine.</p>
@@ -50,17 +52,19 @@
 {% endif %}
 
 {% if player.selected_language == 'it' %}
-  <p class="fs-5">Quando sei pronto, clicca sul pulsante "Next" per continuare.</p>
+  <p class="fs-5">Quando sei pronto, clicca sul pulsante "Avanti" per continuare.</p>
 {% else %}
   <p class="fs-5">When you are ready, click the "Next" button to proceed.</p>
 {% endif %}
-<div class="d-flex justify-content-end">
-  <button
-    type="submit"
-    class="btn btn-primary btn-lg otree-btn-next"
-  >
-    Next
-  </button>
+<div class="next-button-container d-flex justify-content-end">
+    <button type="submit" id="nextBtn" class="btn btn-primary btn-lg otree-btn-next">
+      {% if player.selected_language == 'it' %}
+        Avanti
+      {% else %}
+        Next
+      {% endif %}
+    </button>
+  </div>
 </div>
 </div>
 {% endblock %}

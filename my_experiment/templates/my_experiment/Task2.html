@@ -46,7 +46,7 @@
                     <div class="col-md-6">
                         <div class="form-group border border-primary rounded p-3 bg-light shadow-sm text-center">
                             <label class="fs-5 mb-2" for="alloc_late{{ forloop.counter }}">
-                                {% if language == 'it' %}Tra 4 settimane:{% else %}4 weeks:{% endif %}
+                                {% if language == 'it' %}Tra 4 settimane:{% else %}In 4 weeks:{% endif %}
                             </label>
                             <input
                                 id="alloc_late{{ forloop.counter }}"
@@ -58,6 +58,9 @@
                                 max="1000"
                                 required
                             >
+                            <p class="mt-2 text-muted future-value" id="future_value_{{ forloop.counter }}">
+                                <!-- Will be updated by JS -->
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -70,26 +73,51 @@
             </button>
         </div>
 
+        <script id="rate-data" type="application/json">
+            {{ rate_pairs|safe|json }}
+        </script>
+
         <script>
             const budget = 1000.0;
+            const rateList = JSON.parse(document.getElementById('rate-data').textContent);
+            const lang = "{{ language }}";
 
             document.addEventListener('DOMContentLoaded', () => {
                 for (let i = 1; i <= 5; i++) {
                     const early = document.querySelector(`input[name="alloc_early${i}"]`);
                     const late = document.querySelector(`input[name="alloc_late${i}"]`);
+                    const futureDisplay = document.getElementById(`future_value_${i}`);
+                    const rate = parseFloat(rateList[i - 1][0]);
 
-                    if (early && late) {
+                    const updateFutureValue = (val) => {
+                        if (!isNaN(val)) {
+                            const future = (val * rate).toFixed(2);
+                            if (lang === "it") {
+                                futureDisplay.textContent = `= €${future} tra 4 settimane`;
+                            } else {
+                                futureDisplay.textContent = `= €${future} in 4 weeks`;
+                            }
+                        } else {
+                            futureDisplay.textContent = '';
+                        }
+                    };
+
+                    if (early && late && futureDisplay) {
                         early.addEventListener('input', () => {
-                            let eVal = parseFloat(early.value);
+                            const eVal = parseFloat(early.value);
                             if (!isNaN(eVal) && eVal >= 0 && eVal <= budget) {
-                                late.value = (budget - eVal).toFixed(2);
+                                const lVal = budget - eVal;
+                                late.value = lVal.toFixed(2);
+                                updateFutureValue(lVal);
                             }
                         });
 
                         late.addEventListener('input', () => {
-                            let lVal = parseFloat(late.value);
+                            const lVal = parseFloat(late.value);
                             if (!isNaN(lVal) && lVal >= 0 && lVal <= budget) {
-                                early.value = (budget - lVal).toFixed(2);
+                                const eVal = budget - lVal;
+                                early.value = eVal.toFixed(2);
+                                updateFutureValue(lVal);
                             }
                         });
                     }
